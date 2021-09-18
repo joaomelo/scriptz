@@ -1,18 +1,19 @@
 {
   "name": "sxz",
-  "version": "0.0.4",
+  "version": "0.0.10",
   "description": "",
   "bin": "bin/sxz",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublish": "tsc"
+    "deploy": "tsc && npm publish"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^16.9.2",
     "typescript": "^4.4.3"
   }
 }
