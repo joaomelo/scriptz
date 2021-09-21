@@ -1,11 +1,12 @@
-import { join } from 'path';
+import { resolve } from 'path';
+import { pathToFileURL } from 'url';
 
 main();
 
 async function main(): Promise<void> {
-  const configFile = join(process.cwd(), 'sxz.config.js')
-  console.log({ configFile });  
-  const configExport = await import(configFile);
-  console.log({ configExport });  
-}
+  const configFilePath = resolve('sxz.config.js');
+  const configFileUrl = pathToFileURL(configFilePath);
+  const configFileExport = await import(configFileUrl.href);
 
+  console.log(configFileExport);  
+}
