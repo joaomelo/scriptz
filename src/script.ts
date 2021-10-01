@@ -12,6 +12,7 @@ export type Command = {
 }
 
 export type Composition = {
+  name: string,
   scripts: Script[];
   mode: Mode;
 }

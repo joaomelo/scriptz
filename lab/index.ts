@@ -14,4 +14,4 @@ const echo: Command = {
   bgColor: BgColor.White
 };
 
-sxz([ firebaseEmulators ]);
+sxz([ firebaseEmulators, echo ]);
