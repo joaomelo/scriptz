@@ -1,11 +1,11 @@
 {
   "name": "sxz",
-  "version": "0.0.16",
+  "version": "0.0.20",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/types.d.ts",
-  "type": "module",
   "scripts": {
+    "start": "ts-node lab",
     "deploy": "tsc && npm publish"
   },
   "keywords": [],
@@ -13,6 +13,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^16.9.2",
+    "ts-node": "^10.2.1",
     "typescript": "^4.4.3"
   }
 }
