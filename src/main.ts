@@ -1,23 +1,12 @@
 import { prompt } from 'enquirer';
 import { Script } from './types';
+import { obtainName } from './menu';
 
 export async function sxz(scripts: Script[]): Promise<void> {
   const names = scripts.map(({ name } ) => name);
-  const name = await determineName(names);
+  const name = await obtainName(names);
   
-  console.log({ name });
-}
+  const script = scripts.find(s => s.name === name);
 
-async function determineName(names: string[]): Promise<string> {
-  const response = await prompt({
-    type: 'select',
-    name: 'script',
-    message: 'Choose a script to run',
-    choices: names
-  });
-
-  if (! response has script) then throw;
-  
-  const name = response.script;
-  return name;
+  console.log(script);
 }

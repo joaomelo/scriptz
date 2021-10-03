@@ -5,7 +5,9 @@
   "main": "dist/index.js",
   "types": "dist/types.d.ts",
   "scripts": {
-    "start": "ts-node lab",
+    "start": "npm run lab-menu",
+    "lab-menu": "ts-node lab",
+    "lab-arg": "ts-node lab echo",
     "deploy": "tsc && npm publish"
   },
   "keywords": [],
