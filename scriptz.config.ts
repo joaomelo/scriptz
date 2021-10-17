@@ -1,4 +1,10 @@
-import { BgColor, Command, scriptz, TextColor } from "./src/index.ts"; // make external
+import {
+  BgColor,
+  Command,
+  scriptz,
+  TextColor,
+} from "https://deno.land/x/scriptz@0.0.1/index.ts";
+// } from './src/index.ts';
 
 export const firebaseEmulators: Command = {
   name: "emulators",
@@ -14,4 +20,4 @@ export const echo: Command = {
   bgColor: BgColor.White,
 };
 
-scriptz([firebaseEmulators, echo]); // como importar dinamicamente?
+scriptz([firebaseEmulators, echo]);
