@@ -1,10 +1,6 @@
-import {
-  BgColor,
-  Command,
-  scriptz,
-  TextColor,
-} from "https://deno.land/x/scriptz@0.0.1/index.ts";
-// } from './src/index.ts';
+import { BgColor, TextColor } from "./colors.ts";
+import { Command } from "./script.ts";
+import { main } from "./main.ts";
 
 const firebaseEmulators: Command = {
   name: "emulators",
@@ -20,4 +16,10 @@ const echo: Command = {
   bgColor: BgColor.White,
 };
 
-scriptz([firebaseEmulators, echo]);
+async function scriptz(): Promise<void> {
+  await main([firebaseEmulators, echo]);
+}
+
+if (import.meta.main) {
+  scriptz();
+}
