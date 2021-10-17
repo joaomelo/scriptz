@@ -1,25 +1,24 @@
-import { TextColor, BgColor } from './colors';
+import { BgColor, TextColor } from "./colors.ts";
 
 export type Script = Command | Composition;
 
 export type Command = {
-  name: string
-  instruction: string,
-  envFile?: string,
-  envVars?: Record<string, string>,
-  textColor?: TextColor,
-  bgColor?: BgColor
-}
+  name: string;
+  instruction: string;
+  envFile?: string;
+  envVars?: Record<string, string>;
+  textColor?: TextColor;
+  bgColor?: BgColor;
+};
 
 export type Composition = {
-  name: string,
+  name: string;
   scripts: Script[];
   mode: Mode;
-}
+};
 
 export enum Mode {
-  Serial = 'SERIAL',
-  Parallel = 'PARALLEL',
-  Race = 'RACE'
+  Serial = "SERIAL",
+  Parallel = "PARALLEL",
+  Race = "RACE",
 }
-
