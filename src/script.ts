@@ -3,8 +3,8 @@ import { BgColor, TextColor } from "./colors.ts";
 export type Script = Command | Composition;
 
 export type Command = {
-  name: string | string[];
-  instruction: string;
+  name: string;
+  instruction: string[];
   envFile?: string;
   envVars?: Record<string, string>;
   textColor?: TextColor;

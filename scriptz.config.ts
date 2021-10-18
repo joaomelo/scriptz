@@ -2,7 +2,7 @@ import {
   BgColor,
   Command,
   TextColor,
-} from "https://deno.land/x/scriptz@0.0.5/types.ts";
+} from "https://deno.land/x/scriptz@0.0.6/types.ts";
 
 export const firebaseEmulators: Command = {
   name: "emulators",

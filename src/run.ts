@@ -1,7 +1,19 @@
-import { Script } from "./script.ts";
+import { Command, Script } from "./script.ts";
 
 export function run(script: Script): void {
-  console.log(script);
+  if (isCommand(script)) {
+    once(script);
+  } else {
+    console.log("not command");
+  }
+}
+
+function isCommand(script: Script): script is Command {
+  return (script as Command).instruction !== undefined;
+}
+
+function once(command: Command): void {
+  console.log({ command });
 }
 
 // async function once(command: Command, killer: CommandKiller): Promise<number> {
