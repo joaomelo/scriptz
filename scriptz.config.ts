@@ -1,8 +1,9 @@
 import {
   BgColor,
   Command,
+  Composition,
   TextColor,
-} from "https://deno.land/x/scriptz@0.0.6/types.ts";
+} from "https://deno.land/x/scriptz@0.0.7/types.ts";
 
 export const firebaseEmulators: Command = {
   name: "emulators",
@@ -16,4 +17,10 @@ export const echo: Command = {
   instruction: ["echo", "sxz"],
   textColor: TextColor.Black,
   bgColor: BgColor.White,
+};
+
+export const composition: Composition = {
+  name: "composition",
+  scripts: [echo, firebaseEmulators],
+  mode: "SERIAL",
 };
