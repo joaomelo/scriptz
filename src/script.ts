@@ -3,7 +3,7 @@ import { BgColor, TextColor } from "./colors.ts";
 export type Script = Command | Composition;
 
 export type Command = {
-  name: string;
+  name: string | string[];
   instruction: string;
   envFile?: string;
   envVars?: Record<string, string>;
