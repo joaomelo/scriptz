@@ -12,15 +12,15 @@ export const firebaseEmulators: Command = {
   bgColor: BgColor.Yellow,
 };
 
-export const echo: Command = {
+export const hello: Command = {
   name: "echo",
-  instruction: ["echo", "sxz"],
-  textColor: TextColor.Black,
-  bgColor: BgColor.White,
+  instruction: ["cmd", "/c", "echo", "hello"],
+  textColor: TextColor.White,
+  bgColor: BgColor.Black,
 };
 
 export const composition: Composition = {
   name: "composition",
-  scripts: [echo, firebaseEmulators],
+  scripts: [hello, firebaseEmulators],
   mode: "SERIAL",
 };
