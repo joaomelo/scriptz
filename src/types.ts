@@ -1,3 +1,2 @@
-export * from './main';
-export * from './colors';
-export * from './script';
+export * from "./colors";
+export * from "./script";

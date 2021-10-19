@@ -17,9 +17,6 @@ export type Composition = {
   mode: Mode;
 }
 
-export enum Mode {
-  Serial = 'SERIAL',
-  Parallel = 'PARALLEL',
-  Race = 'RACE'
-}
+export type Mode = "SERIAL" | "PARALLEL" | "RACE";
+
 

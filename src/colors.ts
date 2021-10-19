@@ -1,5 +1,6 @@
+export const Reset = "\u001b[0m";
+
 export enum TextColor {
-  Reset = '\u001b[0m',
   Green = '\u001b[32m',
   Black = '\u001b[30m',
   Red = '\u001b[31m',
@@ -11,7 +12,6 @@ export enum TextColor {
 };
 
 export enum BgColor {
-  Reset = '\u001b[0m',
   Magenta = '\u001b[45;1m',
   Black = '\u001b[40;1m',
   Red = '\u001b[41;1m',

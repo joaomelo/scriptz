@@ -1,8 +1,8 @@
 import { prompt } from 'enquirer';
 
-export async function obtainName(availableNames: string[]): Promise<string> {
+export async function obtainNameFromUser(availableNames: string[]): Promise<string> {
   const cliName = process.argv[2];
-  if (typeof cliName === 'string' && availableNames.includes(cliName)) {
+  if (typeof cliName === 'string') {
     return cliName
   };
 
