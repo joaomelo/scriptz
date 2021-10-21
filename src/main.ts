@@ -23,7 +23,7 @@ async function main(): Promise<void> {
 }
 
 function resolveConfigFile() {
-  const fileName = "scriptz.config.ts";
+  const fileName = "sqript.config.ts";
   const configFilePath = resolve(process.cwd(), fileName);
   return configFilePath;
 }

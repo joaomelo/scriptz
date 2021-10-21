@@ -3,8 +3,7 @@ import {
   Command,
   Composition,
   TextColor,
-} from "./src/types";
-// } from 'scriptz';
+} from 'sqript';
 
 export const firebase: Command = {
   name: "firebase",
