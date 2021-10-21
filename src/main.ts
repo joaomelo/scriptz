@@ -1,5 +1,6 @@
-import { join } from 'path';
+import { resolve } from 'path';
 import { pathToFileURL } from 'url';
+import { register } from 'ts-node';
 import { Script } from './script';
 import { obtainNameFromUser } from "./name";
 import { run } from './run';
@@ -8,8 +9,7 @@ main();
 
 async function main(): Promise<void> {
   const configFile = resolveConfigFile();
-  const userScripts = await import(configFile);
-  const scripts = parseUserScripts(userScripts);
+  const scripts = await extractUserScripts(configFile);
 
   const scriptsNames = scripts.map(({ name }) => name);
   const chosenName = await obtainNameFromUser(scriptsNames);
@@ -24,14 +24,16 @@ async function main(): Promise<void> {
 
 function resolveConfigFile() {
   const fileName = "scriptz.config.ts";
-  const configFilePath = join(process.cwd(), fileName);
-  const configFile = pathToFileURL(configFilePath).href;
-  return configFile;
+  const configFilePath = resolve(process.cwd(), fileName);
+  return configFilePath;
 }
 
-function parseUserScripts(exportedScripts: unknown): Script[] {
+async function extractUserScripts(configFile: string): Promise<Script[]> {
+  register();
+  const exportedScripts = await require(configFile);
+  console.log({ exportedScripts });
   const scripts = Object.values(exportedScripts as Record<string, Script>);
+  console.log({ scripts });
+
   return scripts;
 }
-
-
