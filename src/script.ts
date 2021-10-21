@@ -15,6 +15,6 @@ export type Composition = {
   name: string;
   scripts: Script[];
   mode: Mode;
-};
+}
 
 export type Mode = "SERIAL" | "PARALLEL" | "RACE";

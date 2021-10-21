@@ -1,2 +1,2 @@
-export * from "./colors.ts";
-export * from "./script.ts";
+export * from "./colors";
+export * from "./script";

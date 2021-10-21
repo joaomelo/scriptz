@@ -1,19 +1,30 @@
-import { Input } from "https://deno.land/x/cliffy@v0.19.6/prompt/mod.ts";
+import { prompt } from 'enquirer';
 
-export async function obtainNameFromUser(
-  availableNames: string[],
-): Promise<string> {
-  const cliName = Deno.args[0];
-  if (typeof cliName === "string") {
-    return cliName;
-  }
+export async function obtainNameFromUser(availableNames: string[]): Promise<string> {
+  const cliName = process.argv[2];
+  if (typeof cliName === 'string') {
+    return cliName
+  };
 
-  const promptName: string = await Input.prompt({
-    message: "Type the name of the script you wish to run",
-    list: true,
-    info: true,
-    suggestions: availableNames,
+  const response = await prompt({
+    type: 'select',
+    name: 'name',
+    message: 'Choose a script to run',
+    choices: availableNames
   });
+  assertIsUserResponse(response);
 
-  return promptName;
+  const { name } = response;
+  return name;    
+}
+
+interface UserScriptSelection {
+  name: string;
+}
+
+function assertIsUserResponse(response: object): asserts response is UserScriptSelection {
+  const { name } = (response as UserScriptSelection);
+  if (!(typeof name === 'string' )) {
+    throw new Error('Invalid user response')
+  }
 }
