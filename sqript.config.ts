@@ -5,8 +5,8 @@ import {
   Composition,
 } from 'sqript';
 
-export const firebase: Command = {
-  name: "firebase",
+export const compile: Command = {
+  name: "compile",
   instruction: "firebase init",
   textColor: TextColor.White,
   bgColor: BgColor.Yellow,
