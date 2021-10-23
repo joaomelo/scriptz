@@ -1,8 +1,8 @@
 import {
   BgColor,
+  TextColor,
   Command,
   Composition,
-  TextColor,
 } from 'sqript';
 
 export const firebase: Command = {

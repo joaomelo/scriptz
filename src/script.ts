@@ -1,10 +1,10 @@
-import { BgColor, TextColor } from "./colors.ts";
+import { BgColor, TextColor } from "./colors";
 
 export type Script = Command | Composition;
 
 export type Command = {
   name: string;
-  instruction: string[];
+  instruction: string;
   envFile?: string;
   envVars?: Record<string, string>;
   textColor?: TextColor;
