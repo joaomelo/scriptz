@@ -31,9 +31,7 @@ function resolveConfigFile() {
 async function extractUserScripts(configFile: string): Promise<Script[]> {
   register();
   const exportedScripts = await require(configFile);
-  console.log({ exportedScripts });
   const scripts = Object.values(exportedScripts as Record<string, Script>);
-  console.log({ scripts });
 
   return scripts;
 }
