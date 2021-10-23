@@ -28,6 +28,6 @@ export const hello: Command = {
 
 export const composition: Composition = {
   name: "composition",
-  scripts: [hello, git, firebase],
+  scripts: [hello, git, compile],
   mode: "SERIAL",
 };
