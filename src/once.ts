@@ -2,31 +2,7 @@ import readline from 'readline';
 import { Readable } from 'stream';
 import { spawn } from 'child_process';
 import { Reset } from "./colors";
-import { Script, Command, Composition } from './script';
-
-export async function run(script: Script): Promise<number> {
-  if (isCommand(script)) return once(script)
-
-  switch (script.mode) {
-    case "SERIAL": return serial(script);
-    case "PARALLEL": return 1;
-    case "RACE": return 1;
-  }
-}
-
-function isCommand(script: Script): script is Command {
-  return (script as Command).instruction !== undefined;
-}
-
-async function serial(composition: Composition): Promise<number> {
-  let code = 0;
-  for (const script of composition.scripts) {
-    code = await run(script);
-    if (code !== 0) break;
-  }
-  return code;
-}
-
+import { Command } from './script';
 
 function once(command: Command): Promise<number> {
   return new Promise(resolve => {

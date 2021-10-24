@@ -5,29 +5,48 @@ import {
   Composition,
 } from 'sqript';
 
-export const compile: Command = {
+const compile: Composition = {
   name: "compile",
-  instruction: "firebase init",
-  textColor: TextColor.White,
-  bgColor: BgColor.Yellow,
+  mode: 'SERIAL',
+  scripts: [
+    {
+      name: "clean",
+      instruction: "npx rimraf dist/*"
+    },
+    {
+      name: "tsc",
+      instruction: 'tsc'
+    }
+  ]
+}
+
+const publish: Command = {
+  name: "publish",
+  instruction: "npm publish",
 };
 
-export const git: Command = {
-  name: "git",
-  instruction: "git add -A",
-  textColor: TextColor.Red,
-  bgColor: BgColor.White,
-};
-
-export const hello: Command = {
-  name: "echo",
-  instruction: "echo hello",
-  textColor: TextColor.White,
-  bgColor: BgColor.Black,
-};
-
-export const composition: Composition = {
-  name: "composition",
-  scripts: [hello, git, compile],
+export const deployPatch: Composition = {
+  name: "deploy-patch",
   mode: "SERIAL",
+  scripts: [
+    {
+      name: "patch",
+      instruction: "npm version patch",
+    },
+    compile,
+    publish
+  ]
+};
+
+export const deployMinor: Composition = {
+  name: "deploy-minor",
+  mode: "SERIAL",
+  scripts: [
+    {
+      name: "minor",
+      instruction: "npm version minor",
+    },
+    compile,
+    publish
+  ]
 };
