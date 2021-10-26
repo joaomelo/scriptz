@@ -1,26 +1,27 @@
-import readline from 'readline';
 import { Readable } from 'stream';
 import { spawn } from 'child_process';
-import { Reset } from "./colors";
-import { Command } from './script';
+import readline from 'readline';
+import { Reset, BgColor, TextColor } from "./colors";
+import { Command, RunningScript } from './script';
 
-function once(command: Command): Promise<number> {
-  return new Promise(resolve => {
-    const tag = createTag(command);
-    console.info(`${tag}started`);
 
-    // const scriptEnv = parseEnv({ file: envFile, vars: envVars });
+export function once(command: Command): RunningScript {
+  const tag = createTag(command);
+  console.info(`${tag}started`);
 
-    const runningProcess = spawn(command.instruction, {
-      shell: true
-      // env: scriptEnv
-    });
+  // const scriptEnv = parseEnv({ file: envFile, vars: envVars });
 
-    // killer.kill = () => runningProcess.kill();
+  const runningProcess = spawn(command.instruction, {
+    shell: true
+    // env: scriptEnv
+  });
 
-    tagToConsole(tag, runningProcess.stdout);
-    tagToConsole(tag, runningProcess.stderr);
+  const kill = () => runningProcess.kill();
 
+  tagToConsole(tag, runningProcess.stdout);
+  tagToConsole(tag, runningProcess.stderr);
+
+  const code = new Promise<number>(resolve => {
     runningProcess.on('close', code => {
       const finalCode = code === null ? 1 : code;
       console.info(`${tag}exited with code ${finalCode}`);
@@ -28,15 +29,14 @@ function once(command: Command): Promise<number> {
     });
   });
 
+  return {
+    kill,
+    code
+  }
 }
 
-function createTag(command: Command): string {
-  const bgColor = command.bgColor || Reset;
-  const textColor = command.textColor || Reset;
-  const { name } = command;
-  const tag = `${bgColor}${textColor}[${name}]${Reset} `;
-  return tag;
-}
+
+
 
 function tagToConsole(tag: string, stream: Readable) {
   const rl = readline.createInterface({

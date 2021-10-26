@@ -1,16 +1,13 @@
-import readline from 'readline';
-import { Readable } from 'stream';
-import { spawn } from 'child_process';
-import { Reset } from "./colors";
-import { Script, Command, Composition } from './script';
+import { Script, Command, Composition, RunningScript } from './script';
+import { once } from './once';
 
-export async function run(script: Script): Promise<number> {
+export function run(script: Script): RunningScript {
   if (isCommand(script)) return once(script)
 
   switch (script.mode) {
     case "SERIAL": return serial(script);
-    case "PARALLEL": return 1;
-    case "RACE": return 1;
+    case "PARALLEL": return parallel(script);
+    case "RACE": return race(script);
   }
 }
 
@@ -18,7 +15,7 @@ function isCommand(script: Script): script is Command {
   return (script as Command).instruction !== undefined;
 }
 
-async function serial(composition: Composition): Promise<number> {
+function serial(composition: Composition): RunningScript {
   let code = 0;
   for (const script of composition.scripts) {
     code = await run(script);
@@ -27,45 +24,27 @@ async function serial(composition: Composition): Promise<number> {
   return code;
 }
 
+async function parallel(composition: Composition): RunningScript {
+  const promises = composition
+    .scripts
+    .map(script => run(script));
 
-function once(command: Command): Promise<number> {
-  return new Promise(resolve => {
-    const tag = createTag(command);
-    console.info(`${tag}started`);
-
-    // const scriptEnv = parseEnv({ file: envFile, vars: envVars });
-
-    const runningProcess = spawn(command.instruction, {
-      shell: true
-      // env: scriptEnv
-    });
-
-    // killer.kill = () => runningProcess.kill();
-
-    tagToConsole(tag, runningProcess.stdout);
-    tagToConsole(tag, runningProcess.stderr);
-
-    runningProcess.on('close', code => {
-      const finalCode = code === null ? 1 : code;
-      console.info(`${tag}exited with code ${finalCode}`);
-      resolve(finalCode);
-    });
-  });
-
+  const codes = await Promise.all(promises);
+  return codes.every(code => code === 0) ? 0 : 1;
 }
 
-function createTag(command: Command): string {
-  const bgColor = command.bgColor || Reset;
-  const textColor = command.textColor || Reset;
-  const { name } = command;
-  const tag = `${bgColor}${textColor}[${name}]${Reset} `;
-  return tag;
-}
+async function race(composition: Composition): RunningScript {
+  const killers = [];
+  const promises = raceScript
+    .compose
+    .map(script => {
+      const killer = {};
+      killers.push(killer);
+      return run({ ...script, killer });
+    });
 
-function tagToConsole(tag: string, stream: Readable) {
-  const rl = readline.createInterface({
-    input: stream,
-    terminal: false
-  })
-  rl.on('line', line => console.info(`${tag}${line}`));
+  const exitCode = await Promise.race(promises);
+  killers.forEach(killer => killer.kill());
+
+  return exitCode;
 }

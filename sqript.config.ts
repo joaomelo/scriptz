@@ -1,6 +1,4 @@
 import {
-  BgColor,
-  TextColor,
   Command,
   Composition,
 } from 'sqript';
@@ -20,6 +18,11 @@ const compile: Composition = {
   ]
 }
 
+const lint: Command = {
+  name: "lint",
+  instruction: "npx eslint . --ext .js,.jsx,.ts,.tsx"
+}
+
 const publish: Command = {
   name: "publish",
   instruction: "npm publish",
@@ -29,6 +32,7 @@ export const deployPatch: Composition = {
   name: "deploy-patch",
   mode: "SERIAL",
   scripts: [
+    lint,
     {
       name: "patch",
       instruction: "npm version patch",
@@ -42,6 +46,7 @@ export const deployMinor: Composition = {
   name: "deploy-minor",
   mode: "SERIAL",
   scripts: [
+    lint,
     {
       name: "minor",
       instruction: "npm version minor",
@@ -50,3 +55,18 @@ export const deployMinor: Composition = {
     publish
   ]
 };
+
+export const dummyParallel: Composition = {
+  name: 'dummy-parallel',
+  mode: 'PARALLEL',
+  scripts: [
+    {
+      name: 'hello',
+      instruction: 'echo "world"'
+    },
+    {
+      name: 'hi',
+      instruction: 'echo "there"'
+    }
+  ]
+}

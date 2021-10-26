@@ -1,9 +1,9 @@
-import { resolve } from 'path';
-import { pathToFileURL } from 'url';
-import { register } from 'ts-node';
-import { Script } from './script';
+import { resolve } from "path";
+import { pathToFileURL } from "url";
+import { register } from "ts-node";
+import { Script } from "./script";
 import { obtainNameFromUser } from "./name";
-import { run } from './run';
+import { run } from "./run";
 
 main();
 

@@ -1,0 +1,8 @@
+build/
+dist/
+migrate/
+node_modules/
+public/
+coverage/
+.eslintrc.js
+sqript.config.ts

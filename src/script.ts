@@ -2,19 +2,19 @@ import { BgColor, TextColor } from "./colors";
 
 export type Script = Command | Composition;
 
-export type Command = {
+export interface Taggable {
   name: string;
+  textColor?: TextColor;
+  bgColor?: BgColor;
+}
+
+export interface Command extends Taggable {
   instruction: string;
   envFile?: string;
   envVars?: Record<string, string>;
-  textColor?: TextColor;
-  bgColor?: BgColor;
 };
 
-export type Composition = {
-  name: string;
+export interface Composition extends Taggable {
+  mode: "SERIAL" | "PARALLEL" | "RACE";
   scripts: Script[];
-  mode: Mode;
 }
-
-export type Mode = "SERIAL" | "PARALLEL" | "RACE";
