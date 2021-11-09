@@ -10,9 +10,8 @@ export interface Taggable {
 
 export interface Command extends Taggable {
   instruction: string;
-  envFile?: string;
-  envVars?: Record<string, string>;
-};
+  env?: string | Record<string, string>;
+}
 
 export interface Composition extends Taggable {
   mode: "SERIAL" | "PARALLEL" | "RACE";

@@ -1,9 +1,9 @@
 {
-  "include": [ "src/**/*" ],
+  "include": ["src/**/*"],
   "compilerOptions": {
     "target": "es5",
     "module": "CommonJS",
-    "lib": [ "ES2015", "DOM" ],
+    "lib": ["ES2015", "DOM"],
     "moduleResolution": "node",
     "declaration": true,
     "sourceMap": true,

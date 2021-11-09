@@ -4,5 +4,7 @@ migrate/
 node_modules/
 public/
 coverage/
+tests/
 .eslintrc.js
 sqript.config.ts
+jest.config.js
