@@ -1,8 +1,7 @@
-import { test, expect } from "@playwright/test";
 import { run } from "../src/run";
 import { Composition } from "../src/script";
 
-test.describe("serial composition scripts", () => {
+describe("serial composition scripts", () => {
   test("sequentially run all series", async () => {
     const serial: Composition = {
       name: "serial",

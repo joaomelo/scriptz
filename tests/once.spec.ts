@@ -1,7 +1,6 @@
-import { test, expect } from "@playwright/test";
 import { run } from "../src/run";
 
-test.describe("command scripts", () => {
+describe("command scripts", () => {
   test("successfully run", async () => {
     const command = {
       name: "command",

@@ -12,6 +12,8 @@ export function run(script: Script): Runner {
   if (isCommand(script)) return once(script);
 
   switch (script.mode) {
+    case "RELAY":
+      return serial(script);
     case "SERIAL":
       return serial(script);
     case "PARALLEL":
