@@ -1,11 +1,10 @@
 import { resolve } from "path";
-import { pathToFileURL } from "url";
 import { register } from "ts-node";
 import { Script } from "./script";
 import { obtainNameFromUser } from "./name";
-import { run } from "../migrate/run";
+import { run } from "./run";
 
-main();
+void main();
 
 async function main(): Promise<void> {
   const configFile = resolveConfigFile();
@@ -13,6 +12,9 @@ async function main(): Promise<void> {
 
   const scriptsNames = scripts.map(({ name }) => name);
   const chosenName = await obtainNameFromUser(scriptsNames);
+
+  if (chosenName === "exit") return;
+
   const chosenScript = scripts.find((s) => s.name === chosenName);
 
   if (!chosenScript) {
@@ -30,7 +32,7 @@ function resolveConfigFile() {
 
 async function extractUserScripts(configFile: string): Promise<Script[]> {
   register();
-  const exportedScripts = await require(configFile);
+  const exportedScripts: unknown = await require(configFile);
   const scripts = Object.values(exportedScripts as Record<string, Script>);
 
   return scripts;

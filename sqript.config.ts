@@ -1,27 +1,24 @@
-import {
-  Command,
-  Composition,
-} from 'sqript';
+import { Command, Composition } from "sqript";
 
-const compile: Composition = {
+export const compile: Composition = {
   name: "compile",
-  mode: 'SERIAL',
+  mode: "SERIAL",
   scripts: [
     {
       name: "clean",
-      instruction: "npx rimraf dist/*"
+      instruction: "npx rimraf dist/*",
     },
     {
       name: "tsc",
-      instruction: 'tsc'
-    }
-  ]
-}
+      instruction: "tsc",
+    },
+  ],
+};
 
-const lint: Command = {
+export const lint: Command = {
   name: "lint",
-  instruction: "npx eslint . --ext .js,.jsx,.ts,.tsx"
-}
+  instruction: "npx eslint . --ext .js,.jsx,.ts,.tsx",
+};
 
 const publish: Command = {
   name: "publish",
@@ -38,8 +35,8 @@ export const deployPatch: Composition = {
       instruction: "npm version patch",
     },
     compile,
-    publish
-  ]
+    publish,
+  ],
 };
 
 export const deployMinor: Composition = {
@@ -52,21 +49,21 @@ export const deployMinor: Composition = {
       instruction: "npm version minor",
     },
     compile,
-    publish
-  ]
+    publish,
+  ],
 };
 
 export const dummyParallel: Composition = {
-  name: 'dummy-parallel',
-  mode: 'PARALLEL',
+  name: "dummy-parallel",
+  mode: "PARALLEL",
   scripts: [
     {
-      name: 'hello',
-      instruction: 'echo "world"'
+      name: "hello",
+      instruction: 'echo "world"',
     },
     {
-      name: 'hi',
-      instruction: 'echo "there"'
-    }
-  ]
-}
+      name: "hi",
+      instruction: 'echo "there"',
+    },
+  ],
+};
