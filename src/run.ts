@@ -48,39 +48,18 @@ export function once(command: Command, parents: Taggable[] = []): Runner {
 }
 
 function relay(composition: Composition, parents: Taggable[] = []): Runner {
-  const scriptsQueue = [...composition.scripts];
-  let isKilled = false;
-  let lastCode = 0;
-  let currentRunner: Runner;
-
-  const code = new Promise<number>((resolve) => {
-    const stepQueue = async () => {
-      const nextScript = scriptsQueue.shift();
-      if (!nextScript || lastCode !== 0) {
-        resolve(solveCode(lastCode));
-      } else if (isKilled) {
-        resolve(solveCode(null));
-      } else {
-        currentRunner = run(nextScript, [...parents, composition]);
-        lastCode = await currentRunner.code;
-        void stepQueue();
-      }
-    };
-    void stepQueue();
-  });
-
-  const kill = () => {
-    isKilled = true;
-    currentRunner.kill();
-  };
-
-  return {
-    kill,
-    code,
-  };
+  return sequential(composition, true, parents);
 }
 
 function serial(composition: Composition, parents: Taggable[] = []): Runner {
+  return sequential(composition, false, parents);
+}
+
+function sequential(
+  composition: Composition,
+  exitIfFail: boolean,
+  parents: Taggable[] = []
+): Runner {
   const scriptsQueue = [...composition.scripts];
   let isKilled = false;
   let lastCode = 0;
@@ -90,6 +69,8 @@ function serial(composition: Composition, parents: Taggable[] = []): Runner {
     const stepQueue = async () => {
       const nextScript = scriptsQueue.shift();
       if (!nextScript) {
+        resolve(solveCode(lastCode));
+      } else if (exitIfFail && lastCode !== 0) {
         resolve(solveCode(lastCode));
       } else if (isKilled) {
         resolve(solveCode(null));
