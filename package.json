@@ -9,7 +9,7 @@
     "start": "npm run compile && node dist/main.js",
     "test": "jest",
     "compile": "rimraf dist/* && tsc",
-    "deploy": "npm version patch && npm run compile && npm publish"
+    "deploy": "npm run compile && npm version patch && npm publish"
   },
   "keywords": [],
   "author": "",
