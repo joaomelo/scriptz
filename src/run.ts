@@ -83,7 +83,7 @@ function relay(composition: Composition, parents: Taggable[] = []): Runner {
 function serial(composition: Composition, parents: Taggable[] = []): Runner {
   const scriptsQueue = [...composition.scripts];
   let isKilled = false;
-  let lastCode = 1;
+  let lastCode = 0;
   let currentRunner: Runner;
 
   const code = new Promise<number>((resolve) => {
