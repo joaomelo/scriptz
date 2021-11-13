@@ -17,7 +17,7 @@ export function run(script: Script, parents: Taggable[] = []): Runner {
     case "SERIAL":
       return serial(script, parents);
     case "PARALLEL":
-      return parallel(script);
+      return parallel(script, parents);
     case "RACE":
       return race(script);
   }
@@ -27,7 +27,7 @@ function isCommand(script: Script): script is Command {
   return (script as Command).instruction !== undefined;
 }
 
-export function once(command: Command, parents: Taggable[] = []): Runner {
+function once(command: Command, parents: Taggable[]): Runner {
   // const scriptEnv = parseEnv({ file: envFile, vars: envVars });
   const runningProcess = spawn(command.instruction, {
     shell: true,
@@ -47,11 +47,11 @@ export function once(command: Command, parents: Taggable[] = []): Runner {
   };
 }
 
-function relay(composition: Composition, parents: Taggable[] = []): Runner {
+function relay(composition: Composition, parents: Taggable[]): Runner {
   return sequential(composition, true, parents);
 }
 
-function serial(composition: Composition, parents: Taggable[] = []): Runner {
+function serial(composition: Composition, parents: Taggable[]): Runner {
   return sequential(composition, false, parents);
 }
 
@@ -94,17 +94,24 @@ function sequential(
   };
 }
 
-function parallel(composition: Composition): Runner {
-  // const promises = composition.scripts.map((script) => run(script));
+function parallel(composition: Composition, parents: Taggable[]): Runner {
+  const runners = composition.scripts.map((script) =>
+    run(script, [...parents, composition])
+  );
 
-  // const codes = await Promise.all(promises);
-  // return codes.every((code) => code === 0) ? 0 : 1;
+  const code = new Promise<number>((resolve) => {
+    const promises = runners.map((r) => r.code);
+    void Promise.all(promises).then((codes) => {
+      const reducedCode = codes.every((code) => code === 0) ? 0 : 1;
+      resolve(solveCode(reducedCode));
+    });
+  });
+
+  const kill = () => runners.forEach((r) => r.kill());
 
   return {
-    kill: () => {
-      console.log({ composition });
-    },
-    code: Promise.resolve(1),
+    kill,
+    code,
   };
 }
 
