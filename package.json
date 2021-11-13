@@ -6,8 +6,9 @@
   "main": "dist/main.js",
   "types": "dist/types.d.ts",
   "scripts": {
-    "start": "rimraf dist/* && tsc && node dist/main.js",
+    "start": "npm run compile && node dist/main.js",
     "test": "jest",
+    "compile": "rimraf dist/* && tsc",
     "deploy": "npm version patch && npm run compile && npm publish"
   },
   "keywords": [],
