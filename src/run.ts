@@ -16,10 +16,10 @@ export function run(script: Script, parents: Taggable[] = []): Runner {
       return relay(script, parents);
     case "SERIAL":
       return serial(script, parents);
-    case "PARALLEL":
-      return parallel(script, parents);
+    case "RALLY":
+      return rally(script, parents);
     case "RACE":
-      return race(script);
+      return race(script, parents);
   }
 }
 
@@ -94,44 +94,41 @@ function sequential(
   };
 }
 
-function parallel(composition: Composition, parents: Taggable[]): Runner {
+function rally(composition: Composition, parents: Taggable[]): Runner {
+  return parallel(composition, false, parents);
+}
+
+function race(composition: Composition, parents: Taggable[]): Runner {
+  return parallel(composition, true, parents);
+}
+
+function parallel(
+  composition: Composition,
+  exitEarly: boolean,
+  parents: Taggable[]
+): Runner {
   const runners = composition.scripts.map((script) =>
     run(script, [...parents, composition])
   );
+  const kill = () => runners.forEach((r) => r.kill());
 
   const code = new Promise<number>((resolve) => {
     const promises = runners.map((r) => r.code);
-    void Promise.all(promises).then((codes) => {
-      const reducedCode = codes.every((code) => code === 0) ? 0 : 1;
-      resolve(solveCode(reducedCode));
-    });
+    if (exitEarly) {
+      void Promise.race(promises).then((code) => {
+        kill();
+        resolve(solveCode(code));
+      });
+    } else {
+      void Promise.all(promises).then((codes) => {
+        const code = codes.every((c) => c === 0) ? 0 : 1;
+        resolve(solveCode(code));
+      });
+    }
   });
-
-  const kill = () => runners.forEach((r) => r.kill());
 
   return {
     kill,
     code,
-  };
-}
-
-function race(composition: Composition): Runner {
-  // const killers = [];
-  // const promises = raceScript.compose.map((script) => {
-  //   const killer = {};
-  //   killers.push(killer);
-  //   return run({ ...script, killer });
-  // });
-
-  // const exitCode = await Promise.race(promises);
-  // killers.forEach((killer) => killer.kill());
-
-  // return exitCode;
-
-  return {
-    kill: () => {
-      console.log({ composition });
-    },
-    code: Promise.resolve(1),
   };
 }

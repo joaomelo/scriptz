@@ -7,6 +7,6 @@ export interface Command extends Taggable {
 }
 
 export interface Composition extends Taggable {
-  mode: "RELAY" | "SERIAL" | "PARALLEL" | "RACE";
+  mode: "RELAY" | "SERIAL" | "RALLY" | "RACE";
   scripts: Script[];
 }

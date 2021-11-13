@@ -1,11 +1,11 @@
 import { run } from "./run";
 import { Composition } from "./script";
 
-describe("parallel composition scripts", () => {
+describe("rally composition scripts", () => {
   test("exits with 0 if everyone succeeds", async () => {
     const script: Composition = {
       name: "script",
-      mode: "PARALLEL",
+      mode: "RALLY",
       scripts: [
         {
           name: "node version",
@@ -30,7 +30,7 @@ describe("parallel composition scripts", () => {
   test("exits with 1 if anyone fails", async () => {
     const script: Composition = {
       name: "script",
-      mode: "PARALLEL",
+      mode: "RALLY",
       scripts: [
         {
           name: "node version",
@@ -51,7 +51,7 @@ describe("parallel composition scripts", () => {
   test("when arbitrarily killed returns 1 for exit code", async () => {
     const script: Composition = {
       name: "script",
-      mode: "PARALLEL",
+      mode: "RALLY",
       scripts: [
         {
           name: "node version",
