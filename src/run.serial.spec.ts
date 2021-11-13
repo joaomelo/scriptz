@@ -1,8 +1,8 @@
-import { run } from "../src/run";
-import { Composition } from "../src/script";
+import { run } from "./run";
+import { Composition } from "./script";
 
 describe("serial composition scripts", () => {
-  test("sequentially run all series", async () => {
+  test("sequentially run all series independent of exit code", async () => {
     const serial: Composition = {
       name: "serial",
       mode: "SERIAL",
@@ -10,6 +10,10 @@ describe("serial composition scripts", () => {
         {
           name: "node version",
           instruction: "node -v",
+        },
+        {
+          name: "throw",
+          instruction: "node tests/fixtures/throw",
         },
         {
           name: "exit10",

@@ -8,14 +8,14 @@ type Runner = {
   code: Promise<number>;
 };
 
-export function run(script: Script): Runner {
-  if (isCommand(script)) return once(script);
+export function run(script: Script, parents: Taggable[] = []): Runner {
+  if (isCommand(script)) return once(script, parents);
 
   switch (script.mode) {
     case "RELAY":
-      return serial(script);
+      return relay(script, parents);
     case "SERIAL":
-      return serial(script);
+      return serial(script, parents);
     case "PARALLEL":
       return parallel(script);
     case "RACE":
@@ -47,7 +47,40 @@ export function once(command: Command, parents: Taggable[] = []): Runner {
   };
 }
 
-function serial(composition: Composition): Runner {
+function relay(composition: Composition, parents: Taggable[] = []): Runner {
+  const scriptsQueue = [...composition.scripts];
+  let isKilled = false;
+  let lastCode = 0;
+  let currentRunner: Runner;
+
+  const code = new Promise<number>((resolve) => {
+    const stepQueue = async () => {
+      const nextScript = scriptsQueue.shift();
+      if (!nextScript || lastCode !== 0) {
+        resolve(solveCode(lastCode));
+      } else if (isKilled) {
+        resolve(solveCode(null));
+      } else {
+        currentRunner = run(nextScript, [...parents, composition]);
+        lastCode = await currentRunner.code;
+        void stepQueue();
+      }
+    };
+    void stepQueue();
+  });
+
+  const kill = () => {
+    isKilled = true;
+    currentRunner.kill();
+  };
+
+  return {
+    kill,
+    code,
+  };
+}
+
+function serial(composition: Composition, parents: Taggable[] = []): Runner {
   const scriptsQueue = [...composition.scripts];
   let isKilled = false;
   let lastCode = 1;
@@ -61,7 +94,7 @@ function serial(composition: Composition): Runner {
       } else if (isKilled) {
         resolve(solveCode(null));
       } else {
-        currentRunner = run(nextScript);
+        currentRunner = run(nextScript, [...parents, composition]);
         lastCode = await currentRunner.code;
         void stepQueue();
       }

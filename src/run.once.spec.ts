@@ -1,4 +1,4 @@
-import { run } from "../src/run";
+import { run } from "./run";
 
 describe("command scripts", () => {
   test("successfully run", async () => {
