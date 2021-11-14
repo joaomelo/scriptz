@@ -1,8 +1,18 @@
 import { Command, Composition } from "sqript";
 
+const lint: Command = {
+  name: "lint",
+  instruction: "npx eslint . --ext .js,.jsx,.ts,.tsx",
+};
+
+export const test: Command = {
+  name: "test",
+  instruction: "jest",
+};
+
 export const compile: Composition = {
   name: "compile",
-  mode: "SERIAL",
+  mode: "RELAY",
   scripts: [
     {
       name: "clean",
@@ -15,11 +25,6 @@ export const compile: Composition = {
   ],
 };
 
-export const lint: Command = {
-  name: "lint",
-  instruction: "npx eslint . --ext .js,.jsx,.ts,.tsx",
-};
-
 const publish: Command = {
   name: "publish",
   instruction: "npm publish",
@@ -27,7 +32,7 @@ const publish: Command = {
 
 export const deployPatch: Composition = {
   name: "deploy-patch",
-  mode: "SERIAL",
+  mode: "RELAY",
   scripts: [
     lint,
     {
@@ -41,7 +46,7 @@ export const deployPatch: Composition = {
 
 export const deployMinor: Composition = {
   name: "deploy-minor",
-  mode: "SERIAL",
+  mode: "RELAY",
   scripts: [
     lint,
     {
@@ -50,20 +55,5 @@ export const deployMinor: Composition = {
     },
     compile,
     publish,
-  ],
-};
-
-export const dummyParallel: Composition = {
-  name: "dummy-parallel",
-  mode: "PARALLEL",
-  scripts: [
-    {
-      name: "hello",
-      instruction: 'echo "world"',
-    },
-    {
-      name: "hi",
-      instruction: 'echo "there"',
-    },
   ],
 };
