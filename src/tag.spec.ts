@@ -55,7 +55,7 @@ describe("script tagging", () => {
     const runner = run(script);
     await runner.code;
 
-    expectCall(1, `[${grandparent}][${child1}]`);
-    expectCall(4, `[${grandparent}][${child2}]`);
+    expectCall(1, `[${grandparent}]|[${child1}]`);
+    expectCall(4, `[${grandparent}]|[${child2}]`);
   });
 });
