@@ -1,8 +1,9 @@
-import { Command, Composition } from "sqript";
+import { Command, Composition, Styles } from "sqript";
 
 export const test: Command = {
   name: "test",
   instruction: "jest",
+  styles: ["bgGreenBright", "whiteBright"],
 };
 
 export const qualityControl: Composition = {
@@ -12,6 +13,7 @@ export const qualityControl: Composition = {
     {
       name: "lint",
       instruction: "npx eslint . --ext .js,.jsx,.ts,.tsx",
+      styles: ["bgWhite", "yellow"],
     },
     test,
   ],
@@ -28,13 +30,15 @@ export const compile: Composition = {
     {
       name: "tsc",
       instruction: "tsc",
+      styles: ["blueBright"],
     },
   ],
 };
 
-const publish = {
+const publish: Command = {
   name: "publish",
   instruction: "npm publish",
+  styles: ["bgRed", "whiteBright"],
 };
 
 export const deployCi: Composition = {
