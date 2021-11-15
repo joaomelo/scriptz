@@ -1,5 +1,6 @@
 import { spawn } from "child_process";
 import { Script, Composition, Command } from "./script";
+import { parseEnv } from "./env";
 import { solveCode } from "./code";
 import { tag, Taggable } from "./tag";
 
@@ -28,10 +29,10 @@ function isCommand(script: Script): script is Command {
 }
 
 function once(command: Command, parents: Taggable[]): Runner {
-  // const scriptEnv = parseEnv({ file: envFile, vars: envVars });
+  const env = parseEnv(command.env);
   const runningProcess = spawn(command.instruction, {
     shell: true,
-    // env: scriptEnv
+    env,
   });
   tag(runningProcess, [...parents, command]);
 

@@ -1,9 +1,11 @@
 import { Taggable } from "./tag";
+import { EnvConfig } from "./env";
+
 export type Script = Command | Composition;
 
 export interface Command extends Taggable {
   instruction: string;
-  env?: string | Record<string, string>;
+  env?: EnvConfig;
 }
 
 export interface Composition extends Taggable {
