@@ -1,0 +1,39 @@
+name: publish
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  quality-control:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm i
+      - run: npx sqript quality-control
+
+  bump:
+    needs: [quality-control]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: "actions/checkout@v2"
+      - run: sed -n 3p ./package.json
+      - name: "version bump"
+        uses: "phips28/gh-action-bump-version@master"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          skip-tag: "true"
+      - run: sed -n 3p ./package.json
+
+  deploy:
+    needs: [bump]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+      - run: npx sqript deploy
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
