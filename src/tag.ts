@@ -2,7 +2,9 @@ import readline from "readline";
 import { Readable } from "stream";
 import { ChildProcessWithoutNullStreams } from "child_process";
 // import { Reset, BgColor, TextColor } from "./colors";
+import chalk from "chalk";
 import { solveCode } from "./code";
+
 export interface Taggable {
   name: string;
   // textColor?: TextColor;
@@ -27,7 +29,7 @@ function createPrefix(parents: Taggable[]): string {
     // const bgColor = cur.bgColor || "";
     // const textColor = cur.textColor || "";
     const { name } = cur;
-    const part = `[${name}]`;
+    const part = chalk.blue.bgRed.bold(`[${name}]`);
     // const part = `${bgColor}${textColor}[${name}]${Reset}`;
     return `${acc}${part}`;
   }, "");
