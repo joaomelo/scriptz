@@ -21,7 +21,9 @@ async function main(): Promise<void> {
     throw new Error(`Could not find script with name ${chosenName}`);
   }
 
-  run(chosenScript);
+  const runner = run(chosenScript);
+  const code = await runner.code;
+  process.exit(code);
 }
 
 function resolveConfigFile() {

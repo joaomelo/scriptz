@@ -32,14 +32,26 @@ export const compile: Composition = {
   ],
 };
 
-export const deploy: Composition = {
-  name: "deploy",
+const publish = {
+  name: "publish",
+  instruction: "npm publish",
+};
+
+export const deployCi: Composition = {
+  name: "deploy-ci",
+  mode: "RELAY",
+  scripts: [compile, publish],
+};
+
+export const deployLocal: Composition = {
+  name: "deploy-local",
   mode: "RELAY",
   scripts: [
     compile,
     {
-      name: "publish",
-      instruction: "npm publish",
+      name: "patch",
+      instruction: "npm version patch",
     },
+    publish,
   ],
 };
