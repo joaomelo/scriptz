@@ -47,6 +47,7 @@ export const deployLocal: Composition = {
   name: "deploy-local",
   mode: "RELAY",
   scripts: [
+    qualityControl,
     compile,
     {
       name: "patch",
