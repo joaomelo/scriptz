@@ -55,3 +55,33 @@ export const deployLocal: Composition = {
     publish,
   ],
 };
+
+const grand = "grand";
+const parent1 = "parent1";
+const parent2 = "parent2";
+const child21 = "child21";
+const child22 = "child22";
+export const dummy: Composition = {
+  name: grand,
+  mode: "RELAY",
+  scripts: [
+    {
+      name: parent1,
+      instruction: `echo ${parent1}`,
+    },
+    {
+      name: parent2,
+      mode: "RELAY",
+      scripts: [
+        {
+          name: child21,
+          instruction: `echo ${child21}`,
+        },
+        {
+          name: child22,
+          instruction: `echo ${child22}`,
+        },
+      ],
+    },
+  ],
+};

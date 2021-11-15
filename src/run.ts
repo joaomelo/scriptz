@@ -33,7 +33,7 @@ function once(command: Command, parents: Taggable[]): Runner {
     shell: true,
     // env: scriptEnv
   });
-  tag(runningProcess, [command, ...parents]);
+  tag(runningProcess, [...parents, command]);
 
   const kill = () => runningProcess.kill();
 

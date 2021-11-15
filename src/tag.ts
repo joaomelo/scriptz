@@ -1,12 +1,12 @@
 import readline from "readline";
 import { Readable } from "stream";
 import { ChildProcessWithoutNullStreams } from "child_process";
-import { Reset, BgColor, TextColor } from "./colors";
+// import { Reset, BgColor, TextColor } from "./colors";
 import { solveCode } from "./code";
 export interface Taggable {
   name: string;
-  textColor?: TextColor;
-  bgColor?: BgColor;
+  // textColor?: TextColor;
+  // bgColor?: BgColor;
 }
 
 export function tag(
@@ -24,11 +24,12 @@ export function tag(
 
 function createPrefix(parents: Taggable[]): string {
   return parents.reduce((acc, cur) => {
-    const bgColor = cur.bgColor || Reset;
-    const textColor = cur.textColor || Reset;
+    // const bgColor = cur.bgColor || "";
+    // const textColor = cur.textColor || "";
     const { name } = cur;
-    const part = `${bgColor}${textColor}[${name}]${Reset}`;
-    return `${part}${acc}`;
+    const part = `[${name}]`;
+    // const part = `${bgColor}${textColor}[${name}]${Reset}`;
+    return `${acc}${part}`;
   }, "");
 }
 

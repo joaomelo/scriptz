@@ -3,7 +3,7 @@ import { run } from "./run";
 
 describe("script tagging", () => {
   const expectCall = (n: number, s: string) =>
-    expect(global.console.info).nthCalledWith(n, expect.stringMatching(s));
+    expect(global.console.info).nthCalledWith(n, expect.stringContaining(s));
 
   test("tags are printed orderly", async () => {
     const serial: Composition = {
@@ -33,21 +33,33 @@ describe("script tagging", () => {
     expectCall(5, "exited");
   });
 
-  test("hierarchy is properly presented", async () => {
-    const grandparent = "script";
-    const child1 = "node";
-    const child2 = "ten";
+  test.only("hierarchy is properly presented", async () => {
+    const grand = "grand";
+    const parent1 = "parent1";
+    const parent2 = "parent2";
+    const child21 = "child21";
+    const child22 = "child22";
     const script: Composition = {
-      name: grandparent,
-      mode: "SERIAL",
+      name: grand,
+      mode: "RELAY",
       scripts: [
         {
-          name: child1,
-          instruction: "node -v",
+          name: parent1,
+          instruction: `echo ${parent1}`,
         },
         {
-          name: child2,
-          instruction: "node tests/fixtures/exit-ten",
+          name: parent2,
+          mode: "RELAY",
+          scripts: [
+            {
+              name: child21,
+              instruction: `echo ${child21}`,
+            },
+            {
+              name: child22,
+              instruction: `echo ${child22}`,
+            },
+          ],
         },
       ],
     };
@@ -55,7 +67,7 @@ describe("script tagging", () => {
     const runner = run(script);
     await runner.code;
 
-    expectCall(1, `[${grandparent}][${child1}]`);
-    expectCall(4, `[${grandparent}][${child2}]`);
+    expectCall(1, `[${grand}][${parent1}]`);
+    expectCall(4, `[${grand}][${parent2}][${child21}]`);
   });
 });
