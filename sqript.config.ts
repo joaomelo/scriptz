@@ -82,11 +82,11 @@ export const update: Composition = {
       instruction: "git add -A",
     },
     {
-      name: "install",
-      instruction: 'git commit -m "[skip ci]: updated library version"',
+      name: "commit",
+      instruction: 'git commit -m "chore: [skip ci] updated library version"',
     },
     {
-      name: "install",
+      name: "push",
       instruction: "git push",
     },
   ],
