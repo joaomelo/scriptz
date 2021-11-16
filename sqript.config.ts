@@ -64,6 +64,7 @@ export const deployLocal: Composition = {
 export const dummy: Composition = {
   name: "dummy",
   mode: "RELAY",
+  styles: ["bgMagentaBright", "whiteBright"],
   scripts: [
     {
       name: "parent1",
