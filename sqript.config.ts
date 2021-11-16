@@ -61,6 +61,37 @@ export const deployLocal: Composition = {
   ],
 };
 
+export const update: Composition = {
+  name: "update",
+  mode: "RELAY",
+  scripts: [
+    {
+      name: "pull",
+      instruction: "git pull",
+    },
+    {
+      name: "uninstall",
+      instruction: "npm un sqript",
+    },
+    {
+      name: "install",
+      instruction: "npm i -D sqript",
+    },
+    {
+      name: "add",
+      instruction: "git add -A",
+    },
+    {
+      name: "install",
+      instruction: 'git commit -m "chore: updated library version"',
+    },
+    {
+      name: "install",
+      instruction: "git push",
+    },
+  ],
+};
+
 export const dummy: Composition = {
   name: "dummy",
   mode: "RELAY",
