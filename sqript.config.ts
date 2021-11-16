@@ -83,7 +83,7 @@ export const update: Composition = {
     },
     {
       name: "install",
-      instruction: 'git commit -m "chore: updated library version"',
+      instruction: 'git commit -m "[skip ci]: updated library version"',
     },
     {
       name: "install",
