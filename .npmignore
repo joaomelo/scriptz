@@ -1,6 +1,7 @@
 migrate/
 .github/
 .vscode/
+docs/
 src/
 tests/
 *.spec.*
