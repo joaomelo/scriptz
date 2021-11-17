@@ -1,6 +1,6 @@
 {
   "name": "sqript",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "",
   "bin": "bin/sqript.js",
   "main": "dist/main.js",
