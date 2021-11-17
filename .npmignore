@@ -1,3 +1,13 @@
 migrate/
+.github/
+.vscode/
+docs/
+src/
+tests/
+.eslintignore
+.eslintrc.js
+.prettierignore
+.prettierrc.json
+jest.config.js
 sqript.config.ts
-coverage
+
