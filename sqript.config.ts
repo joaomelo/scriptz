@@ -41,13 +41,13 @@ const publish: Command = {
   styles: ["bgRed", "whiteBright"],
 };
 
-export const deployCi: Composition = {
+export const deployFromCi: Composition = {
   name: "deploy-ci",
   mode: "RELAY",
   scripts: [compile, publish],
 };
 
-export const deployLocal: Composition = {
+export const deployFromLocal: Composition = {
   name: "deploy-local",
   mode: "RELAY",
   scripts: [
@@ -61,7 +61,7 @@ export const deployLocal: Composition = {
   ],
 };
 
-export const update: Composition = {
+export const updateSqriptAsDependency: Composition = {
   name: "update",
   mode: "RELAY",
   scripts: [
