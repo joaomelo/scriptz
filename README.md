@@ -13,9 +13,9 @@ _Why it was built?_
 
 NPM [scripts](https://docs.npmjs.com/cli/v8/using-npm/scripts) feature is fine, but as development scripts grow (like in the example below) as always found it difficult to keep my head around them.
 
-| ![an unconformable personal npm scripts example](docs/npm-scripts-example.png) |
-| :----------------------------------------------------------------------------: |
-|                _an unconformable personal npm scripts example_                 |
+| ![an unconformable personal npm scripts example](https://raw.githubusercontent.com/joaomelo/sqript/main/docs/npm-scripts-example.png) |
+| :-----------------------------------------------------------------------------------------------------------------------------------: |
+|                                            _an unconformable personal npm scripts example_                                            |
 
 I've also tried [Bash](https://www.gnu.org/software/bash/), [Gulp](https://gulpjs.com/), [Grunt](https://gruntjs.com/) and [ZX](https://github.com/google/zx). They are all great pieces of software (and probably a better alternative to you) but, somehow, I never felt at home with the API.
 
