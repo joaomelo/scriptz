@@ -4,10 +4,11 @@ migrate/
 docs/
 src/
 tests/
+*.spec.*
 .eslintignore
 .eslintrc.js
 .prettierignore
 .prettierrc.json
 jest.config.js
 sqript.config.ts
-
+tsconfig.json
