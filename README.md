@@ -5,7 +5,7 @@
 
 _What problem does it solve?_
 
-It is a CLI application that runs scripts built with [Typescript](https://www.typescriptlang.org/). Its goal is to make development workflows descriptive, composable, and easy to maintain.
+Sqript is a CLI application that runs scripts built with [Typescript](https://www.typescriptlang.org/). Its goal is to make development workflows descriptive, composable, and easy to maintain.
 
 # Motivation
 
