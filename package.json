@@ -8,9 +8,26 @@
   "scripts": {
     "start": "rimraf dist/* && tsc && node dist/main.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaomelo/sqript.git"
+  },
+  "author": "joão melo <j@melo.plus> (https://joao.melo.plus)",
+  "homepage": "https://github.com/joaomelo/sqript",
+  "license": "GPL-3.0",
+  "keywords": [
+    "build",
+    "pipeline",
+    "make",
+    "build",
+    "devops-tools",
+    "automation",
+    "task",
+    "task-runner",
+    "task-manager",
+    "workflow",
+    "workflow-automation"
+  ],
   "dependencies": {
     "chalk": "^4.1.2",
     "dotenv": "^10.0.0",
