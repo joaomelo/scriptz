@@ -1,6 +1,6 @@
 {
   "name": "sqript",
-  "version": "0.4.9",
+  "version": "0.4.10",
   "description": "Sqript is a CLI application that runs scripts built with Typescript. Its goal is to make development workflows descriptive, composable, and easy to maintain.",
   "bin": "bin/sqript.js",
   "main": "dist/main.js",
