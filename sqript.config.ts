@@ -1,22 +1,21 @@
 import { Command, Composition, Styles } from "sqript";
 
-export const test: Command = {
-  name: "test",
-  instruction: "jest",
+export const lint: Command = {
+  name: "lint",
+  instruction: "npx eslint . --ext .js,.jsx,.ts,.tsx",
+  styles: ["bgWhite", "yellow"],
+};
+
+export const testDev: Command = {
+  name: "test-dev",
+  instruction: "jest --coverage=false",
   styles: ["bgGreenBright", "whiteBright"],
 };
 
-export const qualityControl: Composition = {
-  name: "quality-control",
-  mode: "RELAY",
-  scripts: [
-    {
-      name: "lint",
-      instruction: "npx eslint . --ext .js,.jsx,.ts,.tsx",
-      styles: ["bgWhite", "yellow"],
-    },
-    test,
-  ],
+export const testCi: Command = {
+  name: "test-ci",
+  instruction: "jest ",
+  styles: ["bgGreenBright", "whiteBright"],
 };
 
 export const compile: Composition = {
@@ -51,7 +50,8 @@ export const deployFromLocal: Composition = {
   name: "deploy-local",
   mode: "RELAY",
   scripts: [
-    qualityControl,
+    lint,
+    testDev,
     compile,
     {
       name: "patch",
@@ -88,32 +88,6 @@ export const updateSqriptAsDependency: Composition = {
     {
       name: "push",
       instruction: "git push",
-    },
-  ],
-};
-
-export const dummy: Composition = {
-  name: "dummy",
-  mode: "RELAY",
-  styles: ["bgMagentaBright", "whiteBright"],
-  scripts: [
-    {
-      name: "parent1",
-      instruction: "echo parent1",
-    },
-    {
-      name: "parent2",
-      mode: "RELAY",
-      scripts: [
-        {
-          name: "child21",
-          instruction: "echo child21",
-        },
-        {
-          name: "child22",
-          instruction: "echo child22",
-        },
-      ],
     },
   ],
 };

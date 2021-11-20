@@ -8,4 +8,6 @@ module.exports = {
     "**/tests/**/?(*.)+(spec|test).ts?(x)",
   ],
   setupFiles: ["./tests/setup-jest.js"],
+  collectCoverage: true,
+  coverageDirectory: "./tests/coverage",
 };
