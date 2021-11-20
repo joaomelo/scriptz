@@ -6,5 +6,5 @@ public/
 coverage/
 tests/
 .eslintrc.js
-sqript.config.ts
+sqript.ts
 jest.config.js

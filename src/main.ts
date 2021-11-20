@@ -27,7 +27,7 @@ async function main(): Promise<void> {
 }
 
 function resolveConfigFile() {
-  const fileName = "sqript.config.ts";
+  const fileName = "sqript.ts";
   const configFilePath = resolve(process.cwd(), fileName);
   return configFilePath;
 }

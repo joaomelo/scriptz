@@ -1,4 +1,4 @@
-import { Command, Composition, Styles } from "sqript";
+import { Command, Composition } from "sqript";
 
 export const lint: Command = {
   name: "lint",
@@ -21,6 +21,7 @@ export const testCi: Command = {
 export const compile: Composition = {
   name: "compile",
   mode: "RELAY",
+  styles: ["underline", "blue"],
   scripts: [
     {
       name: "clean",
