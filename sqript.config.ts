@@ -61,8 +61,8 @@ export const deployFromLocal: Composition = {
   ],
 };
 
-export const updateSqriptAsDependency: Composition = {
-  name: "update",
+export const syncSqript: Composition = {
+  name: "sync",
   mode: "RELAY",
   scripts: [
     {
