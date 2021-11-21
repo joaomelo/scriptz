@@ -11,7 +11,7 @@ Sqript is an npm package that helps code and execute scripts with [Typescript](h
 
 _Why it was built?_
 
-NPM [scripts](https://docs.npmjs.com/cli/v8/using-npm/scripts) feature is fine, but I always found it difficult to keep my head around the `package.json` scripts section as development workflows grow. Like in the following personal example.
+NPM [scripts](https://docs.npmjs.com/cli/v8/using-npm/scripts) feature is super convenient, but I always found it difficult to keep my head around the `package.json` scripts section as development workflows grow. Like in the following personal example.
 
 ![an unconformable personal npm scripts example](https://raw.githubusercontent.com/joaomelo/sqript/main/docs/npm-scripts-example.png)
 
