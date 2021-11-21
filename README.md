@@ -217,7 +217,7 @@ _What to expect?_
 
 The project has limited ambitions. The current API and features can be considered stable from now on.
 
-I still expect to apply the package to more projects to build confidence in its reliability and fix the undoubtedly coming bugs.
+I expect to apply the package to more projects to build confidence in its reliability and fix the undoubtedly coming bugs before the first major version promotion.
 
 If you want to talk, feel free to contact me via [social media](https://joao.melo.plus).
 
