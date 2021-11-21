@@ -5,29 +5,31 @@
 
 _What problem does it solve?_
 
-Sqript is a CLI application that runs scripts built with [Typescript](https://www.typescriptlang.org/). Its goal is to make development workflows descriptive, composable, and easy to maintain.
+Sqript is an npm package that helps code and execute scripts with [Typescript](https://www.typescriptlang.org/). Its goal is to make development workflows descriptive, composable, and maintainable.
 
 # Motivation
 
 _Why it was built?_
 
-NPM [scripts](https://docs.npmjs.com/cli/v8/using-npm/scripts) feature is fine, but I always found it difficult to keep my head around them as development workflows grow. Like in the following personal example.
+NPM [scripts](https://docs.npmjs.com/cli/v8/using-npm/scripts) feature is fine, but I always found it difficult to keep my head around the `package.json` scripts section as development workflows grow. Like in the following personal example.
 
 ![an unconformable personal npm scripts example](https://raw.githubusercontent.com/joaomelo/sqript/main/docs/npm-scripts-example.png)
 
 I've also tried [Bash](https://www.gnu.org/software/bash/), [Gulp](https://gulpjs.com/), [Grunt](https://gruntjs.com/) and [ZX](https://github.com/google/zx). They are all great pieces of software (and probably a better alternative to you) but, somehow, I never felt at home with the API.
 
-I think the point was to have something that offers the power and ergonomics of a modern language without losing the simplicity expected from tools peripheral to the programming challenge itself.
+I think the point is to have something that offers the power and ergonomics of a modern language without losing the simplicity expected from tools peripheral to the programming challenge itself.
 
-Let me show how it is used.
+The next sections will show how Sqript works and enable you to decide if it deserves a try.
 
 # Quick Start
 
-The first step is install Sqript as a dev dependency.
+The first step is to install Sqript as a dev dependency.
 
-`npm i -D sqript`
+```shell
+npm i -D sqript
+```
 
-Now, create a `sqript.ts` file in the root project folder. Edit the file to create scripts. Let us create and export a simple one.
+Then create a `sqript.ts` file in the root project folder and open it so we can author our first script.
 
 ```ts
 // sqript.ts
@@ -36,26 +38,39 @@ import { Command } from "sqript";
 
 export const lint: Command = {
   name: "lint",
-  instruction: "npx eslint . --ext .js,.jsx,.ts,.tsx",
+  instruction: "npx eslint . --ext .js,.ts",
 };
 ```
 
-There are two ways we can use Sqript to run this. The first one is passing its name as an argument in the command line like this: `npx sqript lint`. The second way is to just call `npx sqript` and it will show a list with available scripts for selection.
+There are two ways we can use Sqript to run the command we just created. The first is to pass the name as an argument in the command line. Like this:
 
-This is fine, but things becomes more fun when we use Sqript to compose and style more challenging scripts.
+```shell
+npx sqript lint
+```
+
+The second way is to call Sqript without any arguments. It will show a list of available scripts. Just choose the one you want to run.
+
+```shell
+npx sqript
+```
+
+Things will become way more fun when we start to compose and style more challenging scripts in the next sections.
 
 # Composing Scripts
 
-Sqript handles scripts of two types. The first and basic one is the Command, which represent the core commands run in the shell. The Composition in the other hand, can combine commands or other composition to orchestrate complex workflows.
+Sqript handles scripts of two types: `Command` and `Composition`. Commands represent the core instructions run in the shell. Compositions, on the other hand, can combine scripts to orchestrate complex workflows.
 
-## Relay Composition
+## Relay
 
-Let explore scenario where we want to run quality checks and then deploy a software to production. A composition in `RELAY` mode can achieve that.
+Let explore a scenario where we want to pass some quality checks and if, everything goes well, deploy to production. We could achieve that with a composition in `RELAY` mode.
 
 ```ts
 import { Command, Composition } from "sqript";
 
-export const test: Command = { name: "test", instruction: "jest" };
+export const test: Command = {
+  name: "test",
+  instruction: "jest",
+};
 
 export const compile: Composition = {
   name: "compile",
@@ -78,33 +93,35 @@ export const deploy: Composition = {
 };
 ```
 
-One think to note here is the export statements, we make every export script fo them available for execution by passing the `name` as argument or choosing from the Sqript list. Sqript will only have access to what we export in the `sqript.ts` file.
+One thing to observe here is the role of the `export` statement. Every script exported in `sqript.ts` will be available for execution. In the last example, not only does the `deploy` composition take advantage of the `compile` one, but we could execute `compile` independently with `npx sqript compile`.
 
-Other touch is that by importing `Command` and `Composition` we get code completion and validation when authoring `sqript.ts`.
+Another side note is that we get code completion and validation when authoring `sqript.ts` by importing and using `Command` and `Composition` types on the scripts declarations.
 
-Coming back to the `RELAY` mode, compositions set to this mode will attempt to run its scripts sequentially but will stop if any of them fail. This if useful if one want to stop the workflow when lint or test commands fail, for example.
+Coming back to the `RELAY` subject, compositions set to this mode will attempt to run their scripts sequentially but will stop immediately if any of them fail. This is useful if one wants to cancel the workflow when lint or test commands fail, for example.
 
-Other sequential option is the `SERIAL` mode.
+Another sequential option available is the `SERIAL` mode.
 
-## Serial Composition
+## Serial
 
-This kind of composition will run all child scripts one after another but will keep going even if one of them fails.
+Serial compositions run all their scripts one after another; but, contrary to `RELAY` mode, will keep going even if one of its child scripts fails.
 
 ```ts
 // ... base scripts definition
 
-export const deploy: Composition = {
+export const diagnoses: Composition = {
   name: "diagnoses",
   mode: "SERIAL",
   scripts: [lint, unitTests, integrationTests, e2eTests],
 };
 ```
 
-Serial composition could be useful to run a bunch of scripts we want to collect output of, independent if they fail or not. But Sqript can also orchestrate using a parallel approach with `RALLY` and `RACE`.
+Serial compositions could be useful to run a bunch of scripts we want to collect output from, independent of whether they fail or not.
+
+We explored the two sequential modes `RELAY` and `SERIAL`, but Sqript can also orchestrate using parallel approaches with `RALLY` and `RACE`.
 
 ## Rally
 
-Rally composition will start every child script together and keep running until every one of them exits.
+Rally composition will start its scripts as early as possible and keep running until everyone exits.
 
 ```ts
 export const servers: Composition = {
@@ -114,11 +131,11 @@ export const servers: Composition = {
 };
 ```
 
-Rally compositions could be useful to kickstart some dev environment that dependent on many pieces. But if we want an exit strategy, `RACE` mode can rescue us.
+Rally compositions could be useful to kickstart a local dev environment dependent on different components. But if we need an exit strategy, the alternative `RACE` mode can rescue us.
 
 ## Race
 
-Race compositions will start every child script and exit as soon as any of them completes.
+Like its Rally cousin, the Race composition will start every child script as soon as possible. But when anyone of them completes (no matter if with success or failure), the Race script will kill all the others and exit.
 
 ```ts
 const testCiWorkflow: Composition = {
@@ -134,13 +151,15 @@ export const deploy: Composition = {
 };
 ```
 
-In the above example, we can see the that different composition modes can be put together to achieve more powerful workflows.
+In the above example, we can see that different composition modes can be put together to achieve challenging workflows.
+
+The capability of putting together Commands and Compositions is the bulk Sqript offers. Nevertheless, there are still some secondary features is worth discussing.
 
 # Styling Prefixes
 
-Sqript will print every `Command` output in the terminal with prefixes to enable disambiguation. But as scripts become more complex, especially in parallel modes, things can become hard to understand.
+Sqript will print every `Command` output in the terminal with prefixes to enable disambiguation. But as scripts become more complex, especially in parallel modes, things can be hard to understand.
 
-Every Script can have a `styles` property to set the prefix appearance and help identification. Styles support any values recognized by the great [Chalk](https://github.com/chalk/chalk#styles) package they also should be shown in code completion.
+Every Script can have a `styles` property to set the prefix appearance and help identification. The `styles` property is an array of strings supported by the great [Chalk](https://github.com/chalk/chalk#styles) package. The available values should be shown in code completion.
 
 ```ts
 import { Composition } from "sqript";
@@ -164,15 +183,13 @@ export const testWorkflow: Composition = {
 };
 ```
 
-Please don't judge my aesthetics choices.
+Please don't judge my aesthetic choices.
 
-# Injecting Environment Variables
+# Commands Environment Variables
 
-Other support feature is the ability to pass environment variables to `Command`s. The `env` can have a string value with the path to some valid `.env` file. Other valid value is an object with string values to be inject in the command.
+Another supported feature is the ability to pass environment variables to commands. The `env` property can be a string with the path to some `.env` file or a [Record](https://www.typescriptlang.org/docs/handbook/utility-types.html#recordkeys-type) with string values to be injected in the command.
 
 ```ts
--- TODO
-
 export serverLocal: Command = {
   name: "server-local",
   instruction: "webpack serve",
@@ -183,17 +200,9 @@ export serverCi: Command = {
   name: "server-ci",
   instruction: "webpack serve",
   env: {
-    myStringEnv: "myStringEnv",
+    SERVER_PORT: "8081"
   }
 }
-
-
-    };
-
-    const runner = run(command);
-    await runner.code;
-    expectCallWith("MY_STRING_ENV");
-  });
 ```
 
 # Contribution
@@ -206,7 +215,11 @@ Bug reports and feature requests are welcome in the form of issues. However, I d
 
 _What to expect?_
 
-The project has very limited ambitions. Although some bugs will undoubtedly come, there are not many more features that I expect to add. If you want to talk just contact me via [Social Media](https://joao.melo.plus).
+The project has limited ambitions. The current API and features can be considered stable from now on.
+
+I still expect to apply the package to more projects to build confidence in its reliability and fix the undoubtedly coming bugs.
+
+If you want to talk, feel free to contact me via [social media](https://joao.melo.plus).
 
 🏜️ Fear is the mind-killer.
 

@@ -2,7 +2,7 @@ import { Command, Composition } from "sqript";
 
 export const lint: Command = {
   name: "lint",
-  instruction: "npx eslint . --ext .js,.jsx,.ts,.tsx",
+  instruction: "npx eslint . --ext .js,.ts",
   styles: ["bgWhite", "yellow"],
 };
 
