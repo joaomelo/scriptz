@@ -1,10 +1,9 @@
 bin/
 dist/
-migrate/
 node_modules/
 public/
-coverage/
 tests/
+coverage/
 .eslintrc.js
 sqript.ts
 jest.config.js
