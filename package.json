@@ -1,6 +1,6 @@
 {
   "name": "sqript",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Sqript is an npm package that helps code and execute scripts with Typescript. Its goal is to make development workflows descriptive, composable, and maintainable.",
   "bin": "bin/sqript.js",
   "main": "dist/main.js",
