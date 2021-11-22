@@ -1,3 +1,5 @@
+THE FOLLOWING README IS A DRAFT AND THE PACKAGE CAPABILITIES STILL TO NOT REFLECT WHAT IS WRITTEN. DEV IS IN COURSE BUT NOT DONE YET.
+
 ![github actions](https://github.com/joaomelo/sqript/actions/workflows/publish.yml/badge.svg)
 [![codecov](https://codecov.io/gh/joaomelo/sqript/branch/main/graph/badge.svg?token=3ZkBAWh6qg)](https://codecov.io/gh/joaomelo/sqript)
 
