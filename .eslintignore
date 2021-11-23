@@ -1,9 +1,2 @@
-bin/
-dist/
 node_modules/
-public/
-tests/
 coverage/
-.eslintrc.js
-sqript.ts
-jest.config.js

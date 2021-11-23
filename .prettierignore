@@ -1,6 +1,3 @@
 build/
-dist/
-migrate/
 node_modules/
-public/
 coverage/

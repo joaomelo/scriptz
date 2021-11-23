@@ -1,59 +1,35 @@
-import { Command, Composition } from "sqript";
-
-export const lint: Command = {
+export const lint = {
   name: "lint",
-  instruction: "npx eslint . --ext .js,.ts",
+  instruction: "npx eslint . --ext .js",
   styles: ["bgWhite", "yellow"],
 };
 
-export const testDev: Command = {
+const testStyles = ["bgGreenBright", "whiteBright"];
+
+export const testDev = {
   name: "test-dev",
   instruction: "jest --coverage=false",
-  styles: ["bgGreenBright", "whiteBright"],
+  styles: testStyles,
 };
 
-export const testCi: Command = {
+export const testCi = {
   name: "test-ci",
-  instruction: "jest ",
-  styles: ["bgGreenBright", "whiteBright"],
+  instruction: "jest",
+  styles: testStyles,
 };
 
-export const compile: Composition = {
-  name: "compile",
-  mode: "RELAY",
-  styles: ["underline", "blue"],
-  scripts: [
-    {
-      name: "clean",
-      instruction: "npx rimraf dist/*",
-    },
-    {
-      name: "tsc",
-      instruction: "tsc",
-      styles: ["blueBright"],
-    },
-  ],
-};
-
-const publish: Command = {
+export const publish = {
   name: "publish",
   instruction: "npm publish",
   styles: ["bgRed", "whiteBright"],
 };
 
-export const deployFromCi: Composition = {
-  name: "deploy-ci",
-  mode: "RELAY",
-  scripts: [compile, publish],
-};
-
-export const deployFromLocal: Composition = {
-  name: "deploy-local",
+export const publishLocal = {
+  name: "publish-local",
   mode: "RELAY",
   scripts: [
     lint,
     testDev,
-    compile,
     {
       name: "patch",
       instruction: "npm version patch",
@@ -62,7 +38,7 @@ export const deployFromLocal: Composition = {
   ],
 };
 
-export const syncSqript: Composition = {
+export const syncSqript = {
   name: "sync",
   mode: "RELAY",
   scripts: [

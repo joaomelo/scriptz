@@ -7,7 +7,7 @@ THE FOLLOWING README IS A DRAFT AND THE PACKAGE CAPABILITIES STILL TO NOT REFLEC
 
 _What problem does it solve?_
 
-Sqript is an npm package that helps code and execute scripts with [Typescript](https://www.typescriptlang.org/). Its goal is to make development workflows descriptive, composable, and maintainable.
+Sqript is an npm package that helps code and execute scripts with JavaScript. Its goal is to make development workflows descriptive, composable, and maintainable.
 
 # Motivation
 
