@@ -18,10 +18,14 @@ module.exports = {
       },
     ],
     "no-debugger": "warn",
+    "jest/expect-expect": [
+      "error",
+      { assertFunctionNames: ["expect", "expectInfoCalledWith"] },
+    ],
   },
   env: {
     node: true,
-    es6: true,
+    es2021: true,
     "jest/globals": true,
   },
 };

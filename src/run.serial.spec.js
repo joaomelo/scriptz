@@ -1,49 +1,42 @@
 import { run } from "./run";
-import { Composition } from "./script";
 
 describe("serial composition scripts", () => {
   test("sequentially run all series independent of exit code", async () => {
-    const serial: Composition = {
+    const runner = run({
       name: "serial",
-      mode: "SERIAL",
-      scripts: [
+      serial: [
         {
           name: "node version",
-          instruction: "node -v",
+          command: "node -v",
         },
         {
           name: "throw",
-          instruction: "node tests/fixtures/throw",
+          command: "node tests/fixtures/throw",
         },
         {
           name: "exit10",
-          instruction: "node tests/fixtures/exit-ten",
+          command: "node tests/fixtures/exit-ten",
         },
       ],
-    };
-
-    const runner = run(serial);
+    });
     const code = await runner.code;
     expect(code).toBe(10);
   });
 
   test("when arbitrarily killed returns 1 for exit code", async () => {
-    const serial: Composition = {
+    const runner = run({
       name: "serial",
-      mode: "SERIAL",
-      scripts: [
+      serial: [
         {
           name: "exit10",
-          instruction: "node tests/fixtures/exit-ten",
+          command: "node tests/fixtures/exit-ten",
         },
         {
           name: "forever",
-          instruction: "node tests/fixtures/forever",
+          command: "node tests/fixtures/forever",
         },
       ],
-    };
-
-    const runner = run(serial);
+    });
     runner.kill();
     const code = await runner.code;
 

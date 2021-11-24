@@ -2,23 +2,19 @@ import { run } from "./run";
 
 describe("command scripts", () => {
   test("successfully run", async () => {
-    const command = {
+    const runner = run({
       name: "command",
-      instruction: "node -v",
-    };
-
-    const runner = run(command);
+      command: "node -v",
+    });
     const code = await runner.code;
     expect(code).toBe(0);
   });
 
   test("can catch the exit code multiple times", async () => {
-    const command = {
+    const runner = run({
       name: "command",
-      instruction: "node -v",
-    };
-
-    const runner = run(command);
+      command: "node -v",
+    });
     const code = await runner.code;
     const secondCode = await runner.code;
 
@@ -27,34 +23,28 @@ describe("command scripts", () => {
   });
 
   test("correctly catch exotic codes", async () => {
-    const command = {
+    const runner = run({
       name: "command",
-      instruction: "node tests/fixtures/exit-ten",
-    };
-
-    const runner = run(command);
+      command: "node tests/fixtures/exit-ten",
+    });
     const code = await runner.code;
     expect(code).toBe(10);
   });
 
   test("captures code even when command throws", async () => {
-    const command = {
+    const runner = run({
       name: "command",
-      instruction: "node tests/fixtures/throw",
-    };
-
-    const runner = run(command);
+      command: "node tests/fixtures/throw",
+    });
     const code = await runner.code;
     expect(code).toBe(1);
   });
 
   test("when arbitrarily killed returns 1 for exit code", async () => {
-    const command = {
+    const runner = run({
       name: "command",
-      instruction: "node tests/fixtures/forever",
-    };
-
-    const runner = run(command);
+      command: "node tests/fixtures/forever",
+    });
     runner.kill();
     const code = await runner.code;
 
