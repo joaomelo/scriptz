@@ -1,4 +1,4 @@
-import { run } from "./run";
+import { run } from "./run.js";
 
 describe("relay composition scripts", () => {
   test("sequentially run everything while scripts exit code is 0", async () => {

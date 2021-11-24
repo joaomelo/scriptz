@@ -1,6 +1,6 @@
 import readline from "readline";
-import { applyStyles } from "./styles";
-import { solveCode } from "./code";
+import { applyStyles } from "./styles.js";
+import { solveCode } from "./code.js";
 
 export function tag(process, hierarchy) {
   const prefix = createPrefix(hierarchy);

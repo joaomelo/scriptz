@@ -1,5 +1,5 @@
-import { expectInfoCalledWith } from "../tests/expect";
-import { run } from "./run";
+import { expectInfoCalledWith } from "../tests/expect.js";
+import { run } from "./run.js";
 
 describe("script tagging", () => {
   test("tags are printed orderly", async () => {

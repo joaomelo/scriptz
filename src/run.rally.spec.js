@@ -1,4 +1,4 @@
-import { run } from "./run";
+import { run } from "./run.js";
 
 describe("rally composition scripts", () => {
   test("exits with 0 if everyone succeeds", async () => {

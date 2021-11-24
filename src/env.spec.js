@@ -1,5 +1,5 @@
-import { run } from "./run";
-import { expectInfoCalledWith } from "../tests/expect";
+import { run } from "./run.js";
+import { expectInfoCalledWith } from "../tests/expect.js";
 
 describe("env injection", () => {
   test("can inject from object", async () => {

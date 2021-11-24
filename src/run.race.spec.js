@@ -1,4 +1,4 @@
-import { run } from "./run";
+import { run } from "./run.js";
 
 describe("race composition scripts", () => {
   test("exits with first completed code", async () => {

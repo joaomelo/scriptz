@@ -1,4 +1,4 @@
-import { prompt } from "enquirer";
+import enquirer from "enquirer";
 
 export async function obtainNameFromUser(availableNames) {
   const cliName = process.argv[2];
@@ -7,6 +7,7 @@ export async function obtainNameFromUser(availableNames) {
   }
 
   const exitName = "exit";
+  const { prompt } = enquirer;
   const response = await prompt({
     type: "select",
     name: "name",

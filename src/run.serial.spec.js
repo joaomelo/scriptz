@@ -1,4 +1,4 @@
-import { run } from "./run";
+import { run } from "./run.js";
 
 describe("serial composition scripts", () => {
   test("sequentially run all series independent of exit code", async () => {

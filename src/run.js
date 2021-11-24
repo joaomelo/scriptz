@@ -1,8 +1,8 @@
 import { spawn } from "child_process";
-import { TYPES, resolveType } from "./types";
-import { solveCode } from "./code";
-import { parseEnv } from "./env";
-import { tag } from "./tag";
+import { TYPES, resolveType } from "./types.js";
+import { solveCode } from "./code.js";
+import { parseEnv } from "./env.js";
+import { tag } from "./tag.js";
 
 export function run(script, parents = []) {
   const type = resolveType(script);
@@ -86,7 +86,7 @@ function sequential(script, childrenProp, exitIfFail, parents) {
 }
 
 function rally(composition, parents) {
-  return parallel(composition, TYPES.rally.toLowerCase(), false, parents);
+  return parallel(composition, TYPES.RALLY.toLowerCase(), false, parents);
 }
 
 function race(composition, parents) {

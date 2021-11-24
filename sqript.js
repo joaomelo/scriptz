@@ -1,38 +1,43 @@
 export const lint = {
   name: "lint",
-  instruction: "npx eslint . --ext .js",
+  command: "npx eslint . --ext .js",
   styles: ["bgWhite", "yellow"],
 };
 
-const testStyles = ["bgGreenBright", "whiteBright"];
+const testTemplate = {
+  styles: ["bgGreenBright", "whiteBright"],
+  env: {
+    // required by https://jestjs.io/docs/ecmascript-modules
+    NODE_OPTIONS: "--experimental-vm-modules",
+  },
+};
 
 export const testDev = {
   name: "test-dev",
-  instruction: "jest --coverage=false",
-  styles: testStyles,
+  command: "jest",
+  ...testTemplate,
 };
 
 export const testCi = {
   name: "test-ci",
-  instruction: "jest",
-  styles: testStyles,
+  command: "jest --coverage",
+  ...testTemplate,
 };
 
 export const publish = {
   name: "publish",
-  instruction: "npm publish",
+  command: "npm publish",
   styles: ["bgRed", "whiteBright"],
 };
 
 export const publishLocal = {
   name: "publish-local",
-  mode: "RELAY",
-  scripts: [
+  relay: [
     lint,
     testDev,
     {
       name: "patch",
-      instruction: "npm version patch",
+      command: "npm version patch",
     },
     publish,
   ],
@@ -40,31 +45,30 @@ export const publishLocal = {
 
 export const syncSqript = {
   name: "sync",
-  mode: "RELAY",
-  scripts: [
+  relay: [
     {
       name: "pull",
-      instruction: "git pull",
+      command: "git pull",
     },
     {
       name: "uninstall",
-      instruction: "npm un sqript",
+      command: "npm un sqript",
     },
     {
       name: "install",
-      instruction: "npm i -D sqript",
+      command: "npm i -D sqript",
     },
     {
       name: "add",
-      instruction: "git add -A",
+      command: "git add -A",
     },
     {
       name: "commit",
-      instruction: 'git commit -m "chore: [skip ci] updated library version"',
+      command: 'git commit -m "chore: [skip ci] updated library version"',
     },
     {
       name: "push",
-      instruction: "git push",
+      command: "git push",
     },
   ],
 };
