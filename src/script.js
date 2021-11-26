@@ -3,7 +3,9 @@ import { pathToFileURL } from "url";
 
 export async function extractUserScripts() {
   const configFilePath = resolveFilePath();
+  console.log("test1");
   const exportedScripts = await import(configFilePath);
+  console.log("test2");
   const scripts = Object.values(exportedScripts);
   return scripts;
 }
