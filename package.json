@@ -2,11 +2,11 @@
   "name": "sqript",
   "version": "0.5.14",
   "description": "Sqript is an npm package that helps code and execute scripts with JavaScript. Its goal is to make development workflows descriptive, composable, and maintainable.",
-  "bin": "bin/sqript.js",
-  "main": "src/index.js",
+  "bin": "./bin/sqript.js",
+  "main": "./src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node bin/sqript.js"
+    "start": "node ./bin/sqript.js"
   },
   "repository": {
     "type": "git",
