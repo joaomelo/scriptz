@@ -6,10 +6,6 @@ export const lint = {
 
 const testTemplate = {
   styles: ["bgGreenBright", "whiteBright"],
-  env: {
-    // required by https://jestjs.io/docs/ecmascript-modules
-    NODE_OPTIONS: "--experimental-vm-modules",
-  },
 };
 
 export const testDev = {
