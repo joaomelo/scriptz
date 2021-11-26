@@ -1,6 +1,6 @@
 export const lint = {
   name: "lint",
-  command: "npx eslint . --ext .js",
+  command: "eslint . --ext .js",
   styles: ["bgWhite", "yellow"],
 };
 
