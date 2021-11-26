@@ -14,7 +14,7 @@ jobs:
       - run: npx sqript lint
       - run: npx sqript test-ci
       - run: npm i -g codecov
-      - run: codecov
+      - run: codecov --disable=gcov
 
   bump:
     needs: [quality-control]
