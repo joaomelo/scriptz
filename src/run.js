@@ -85,17 +85,17 @@ function sequential(script, childrenProp, exitIfFail, parents) {
   };
 }
 
-function rally(composition, parents) {
-  return parallel(composition, TYPES.RALLY.toLowerCase(), false, parents);
+function rally(script, parents) {
+  return parallel(script, TYPES.RALLY.toLowerCase(), false, parents);
 }
 
-function race(composition, parents) {
-  return parallel(composition, TYPES.RACE.toLowerCase(), true, parents);
+function race(script, parents) {
+  return parallel(script, TYPES.RACE.toLowerCase(), true, parents);
 }
 
 function parallel(script, childrenProp, exitEarly, parents) {
   const childrenRunners = script[childrenProp].map((child) =>
-    run(child, [...parents, child])
+    run(child, [...parents, script])
   );
   const kill = () => childrenRunners.forEach((r) => r.kill());
 
