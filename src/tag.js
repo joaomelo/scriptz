@@ -15,7 +15,8 @@ export function tag(process, hierarchy) {
 function createPrefix(hierarchy) {
   return hierarchy.reduce((formattedHierarchyNames, script) => {
     const { name, styles } = script;
-    const formattedScriptName = applyStyles(`[${name}]`, styles);
+    const tagText = name || createRandomTagText();
+    const formattedScriptName = applyStyles(`[${tagText}]`, styles);
     return `${formattedHierarchyNames}${formattedScriptName}`;
   }, "");
 }
@@ -33,4 +34,14 @@ function tagClose(prefix, process) {
     const code = solveCode(rawCode);
     console.info(`${prefix} exited with code ${code}`);
   });
+}
+
+function createRandomTagText() {
+  const text = Array(5).fill(null);
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+  return text.reduce(
+    (acc) => acc + chars.charAt(Math.floor(Math.random() * chars.length)),
+    ""
+  );
 }

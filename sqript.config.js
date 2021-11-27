@@ -42,29 +42,11 @@ export const publishLocal = {
 export const syncSqript = {
   name: "sync",
   relay: [
-    {
-      name: "pull",
-      command: "git pull",
-    },
-    {
-      name: "uninstall",
-      command: "npm un sqript",
-    },
-    {
-      name: "install",
-      command: "npm i -D sqript",
-    },
-    {
-      name: "add",
-      command: "git add -A",
-    },
-    {
-      name: "commit",
-      command: 'git commit -m "chore: [skip ci] updated library version"',
-    },
-    {
-      name: "push",
-      command: "git push",
-    },
+    { command: "git pull" },
+    { command: "npm un sqript" },
+    { command: "npm i -D sqript" },
+    { command: "git add -A" },
+    { command: 'git commit -m "chore: [skip ci] updated library version"' },
+    { command: "git push" },
   ],
 };
