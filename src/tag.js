@@ -15,7 +15,6 @@ export function tag(process, hierarchy) {
 
 function createPrefix(hierarchy) {
   const size = evaluateArgument("size");
-  console.log(typeof size);
 
   return hierarchy.reduce((formattedHierarchyNames, script) => {
     const { name, styles } = script;
@@ -42,7 +41,7 @@ function tagClose(prefix, process) {
 
 function assureSize(str, size) {
   if (!size) return str;
-  return str.padEnd(size, " ");
+  return str.padEnd(size, " ").slice(0, size);
 }
 
 function createRandomTagText(size = 5) {
