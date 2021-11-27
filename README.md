@@ -178,6 +178,12 @@ export const testWorkflow = {
 
 Please don't judge my aesthetic choices.
 
+We can also pass a `length` argument to **Sqript** so prefixes will obey to the given size by padding or truncating scripts names. Like this:
+
+```shell
+npx sqript --length=5 --name=test-workflow
+```
+
 # Commands Environment Variables
 
 Another supported feature is the ability to pass environment variables to commands. The `env` property can be a string with the path to some `.env` file or an object with string values to be injected in the command.

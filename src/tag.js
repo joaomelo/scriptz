@@ -14,11 +14,13 @@ export function tag(process, hierarchy) {
 }
 
 function createPrefix(hierarchy) {
-  const size = evaluateArgument("size");
+  const length = evaluateArgument("length");
 
   return hierarchy.reduce((formattedHierarchyNames, script) => {
     const { name, styles } = script;
-    const tagText = name ? assureSize(name, size) : createRandomTagText(size);
+    const tagText = name
+      ? assureLength(name, length)
+      : createRandomTagText(length);
     const formattedScriptName = applyStyles(`[${tagText}]`, styles);
     return `${formattedHierarchyNames}${formattedScriptName}`;
   }, "");
@@ -39,17 +41,15 @@ function tagClose(prefix, process) {
   });
 }
 
-function assureSize(str, size) {
-  if (!size) return str;
-  return str.padEnd(size, " ").slice(0, size);
+function assureLength(str, length) {
+  if (!length) return str;
+  return str.padEnd(length, " ").slice(0, length);
 }
 
-function createRandomTagText(size = 5) {
-  const text = Array(size).fill(null);
+function createRandomTagText(length = 5) {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const pick = () => chars.charAt(Math.floor(Math.random() * chars.length));
 
-  return text.reduce(
-    (acc) => acc + chars.charAt(Math.floor(Math.random() * chars.length)),
-    ""
-  );
+  const filled = Array(length).fill(null);
+  return filled.reduce((acc) => acc + pick(), "");
 }
