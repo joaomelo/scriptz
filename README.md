@@ -15,7 +15,7 @@ NPM [scripts](https://docs.npmjs.com/cli/v8/using-npm/scripts) feature is super 
 
 ![an unconformable personal npm scripts example](https://raw.githubusercontent.com/joaomelo/sqript/main/docs/npm-scripts-example.png)
 
-I've also tried [Bash](https://www.gnu.org/software/bash/), [Gulp](https://gulpjs.com/), [Grunt](https://gruntjs.com/) and [ZX](https://github.com/google/zx). They are all great pieces of software (and probably a better alternative to you) but, somehow, I never felt at home with the API.
+I've also tried [Bash](https://www.gnu.org/software/bash/), [Gulp](https://gulpjs.com/), [Grunt](https://gruntjs.com/) and [ZX](https://github.com/google/zx). They are all great pieces of battle tested software (and possibly a better alternative to you) but, somehow, I never felt at home with the API.
 
 I think the point is to have something that offers the power and ergonomics of a modern language without losing the simplicity expected from tools peripheral to the programming challenge itself.
 
@@ -61,7 +61,7 @@ Things will become way more fun when we start to compose and style more challeng
 
 # Composing Scripts
 
-The last section script is the most basic type supported: a `command`. Nevertheless, **Sqript** can handle more complex ones to enable multiple scripts orchestration. The next type we will look at is the Relay.
+The last section explored the most basic script type supported: `command`. Nevertheless, **Sqript** can handle more complex ones to enable scripts orchestration. The next type we will look at is the `relay`.
 
 ## Relay
 
@@ -213,7 +213,7 @@ _What to expect?_
 
 The project has limited ambitions. The current set of features and their API can be considered stable from now on.
 
-I expect to apply the package to more projects to build confidence in its reliability and fix the undoubtedly coming bugs before the first major version promotion.
+I expect to apply the package to more projects before the first major version promotion. It will build confidence in its reliability and fix the undoubtedly coming bugs.
 
 If you want to talk, feel free to contact me via [social media](https://joao.melo.plus).
 
