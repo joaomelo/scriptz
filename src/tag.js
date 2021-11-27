@@ -15,10 +15,11 @@ export function tag(process, hierarchy) {
 
 function createPrefix(hierarchy) {
   const size = evaluateArgument("size");
+  console.log(typeof size);
 
   return hierarchy.reduce((formattedHierarchyNames, script) => {
     const { name, styles } = script;
-    const tagText = name || createRandomTagText(size);
+    const tagText = name ? assureSize(name, size) : createRandomTagText(size);
     const formattedScriptName = applyStyles(`[${tagText}]`, styles);
     return `${formattedHierarchyNames}${formattedScriptName}`;
   }, "");
@@ -37,6 +38,11 @@ function tagClose(prefix, process) {
     const code = solveCode(rawCode);
     console.info(`${prefix} exited with code ${code}`);
   });
+}
+
+function assureSize(str, size) {
+  if (!size) return str;
+  return str.padEnd(size, " ");
 }
 
 function createRandomTagText(size = 5) {
