@@ -1,4 +1,5 @@
 import readline from "readline";
+import { evaluateArgument } from "./arguments.js";
 import { applyStyles } from "./styles.js";
 import { solveCode } from "./code.js";
 
@@ -13,9 +14,11 @@ export function tag(process, hierarchy) {
 }
 
 function createPrefix(hierarchy) {
+  const size = evaluateArgument("size");
+
   return hierarchy.reduce((formattedHierarchyNames, script) => {
     const { name, styles } = script;
-    const tagText = name || createRandomTagText();
+    const tagText = name || createRandomTagText(size);
     const formattedScriptName = applyStyles(`[${tagText}]`, styles);
     return `${formattedHierarchyNames}${formattedScriptName}`;
   }, "");
@@ -36,8 +39,8 @@ function tagClose(prefix, process) {
   });
 }
 
-function createRandomTagText() {
-  const text = Array(5).fill(null);
+function createRandomTagText(size = 5) {
+  const text = Array(size).fill(null);
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
   return text.reduce(
