@@ -1,9 +1,10 @@
 import enquirer from "enquirer";
+import { evaluateArgument } from "./arguments.js";
 
 export async function obtainNameFromUser(availableNames) {
-  const cliName = process.argv[2];
-  if (typeof cliName === "string") {
-    return cliName;
+  const argName = evaluateArgument("name");
+  if (typeof argName === "string") {
+    return argName;
   }
 
   const exitName = "exit";

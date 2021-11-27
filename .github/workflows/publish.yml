@@ -11,8 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm i
-      - run: npx sqript lint
-      - run: npx sqript test-ci
+      - run: npx sqript --name=lint
+      - run: npx sqript --name=test-ci
       - run: npm i -g codecov
       - run: codecov --disable=gcov
 
@@ -42,6 +42,6 @@ jobs:
           node-version: "16"
           registry-url: https://registry.npmjs.org/
       - run: npm i
-      - run: npx sqript publish
+      - run: npx sqript --name=publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

@@ -48,7 +48,7 @@ export const lint = {
 There are two ways we can use **Sqript** to run the command we just created. The first is to pass the name as an argument in the command line. Like this:
 
 ```shell
-npx sqript lint
+npx sqript --name=lint
 ```
 
 The second way is to call **Sqript** without any arguments. It will show a list of available scripts. Just choose the one you want to run.
@@ -57,7 +57,13 @@ The second way is to call **Sqript** without any arguments. It will show a list 
 npx sqript
 ```
 
-Things will become way more fun when we start to compose and style more challenging scripts in the next sections.
+Note that **Sqript** will also attempt to find a `sqript.config.mjs` file and we can pass an arbitrary scripts file using the `config` argument, like so:
+
+```shell
+npx sqript --name=lint --config=my-scripts.js
+```
+
+Lint commands are essential, but things can be way more fun when we start to compose and style more challenging scripts in the next sections.
 
 # Composing Scripts
 

@@ -1,9 +1,9 @@
 import { obtainNameFromUser } from "./name.js";
-import { extractUserScripts } from "./script.js";
+import { extractUserScriptsFromConfigFile } from "./scripts.js";
 import { run } from "./run.js";
 
 export async function main() {
-  const scripts = await extractUserScripts();
+  const scripts = await extractUserScriptsFromConfigFile();
 
   const scriptsNames = scripts.map(({ name }) => name);
   const chosenName = await obtainNameFromUser(scriptsNames);
