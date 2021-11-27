@@ -81,10 +81,7 @@ export const test = {
 
 export const compile = {
   name: "compile",
-  relay: [
-    { name: "clean", command: "rimraf dist/*" },
-    { name: "tsc", command: "tsc" },
-  ],
+  relay: [{ command: "rimraf dist/*" }, { command: "tsc" }],
 };
 
 export const publish = {
@@ -98,7 +95,7 @@ export const deploy = {
 };
 ```
 
-One thing to observe here is the role of the `export` statement. Every script exported in `sqript.config.js` will be available for execution. In the last example, not only does the `deploy` composition take advantage of the `compile` one, but we could execute `compile` independently with `npx sqript compile`.
+One thing to observe here is the role of the `export` statement. Every script exported in `sqript.config.js` will be available for execution. In the last example, not only does the `deploy` composition take advantage of the `compile` one, but we could execute `compile` independently with `npx sqript --name=compile`.
 
 Coming back to the `relay` subject, relays attempt to run their scripts sequentially but will stop immediately if any of them fail. This is useful if one wants to cancel the workflow when lint or test commands fail, for example.
 
