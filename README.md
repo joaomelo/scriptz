@@ -145,9 +145,9 @@ The capability of putting together scripts with different execution rules is the
 
 # Styling Prefixes
 
-**Sqript** will print every `command` output in the terminal with prefixes to enable disambiguation. But as scripts become more complex, especially in parallel modes, things can be hard to disambiguate.
+**Sqript** will print every `command` output in the terminal with prefixes to enable disambiguation. But as scripts become more complex, especially in parallel modes, things can be hard to disambiguate. Fortunately, we can improve the situation with some prefixes customization.
 
-The prefix is based on the `name` property of the script. Note below.
+The first thing to know is that the prefix is based on the `name` property of the script. Note below:
 
 ```js
 export const publishFromLocalhost = {
