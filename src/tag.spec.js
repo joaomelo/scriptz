@@ -25,8 +25,6 @@ describe("script tagging", () => {
     expectInfoCalledWith("exited", 3);
     expectInfoCalledWith("starting", 4);
     expectInfoCalledWith("exited", 5);
-
-    expectInfoCalledWith("fail now", 10);
   });
 
   test("hierarchy is properly presented", async () => {
