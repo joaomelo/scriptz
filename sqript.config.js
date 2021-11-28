@@ -1,42 +1,22 @@
 export const lint = {
-  name: "lint",
   command: "eslint . --ext .js",
   styles: ["bgWhite", "yellow"],
 };
 
-const testTemplate = {
+const testTemplate = (params) => ({
   styles: ["bgGreenBright", "whiteBright"],
-};
-
-export const testDev = {
-  name: "test-dev",
-  command: "jest",
-  ...testTemplate,
-};
-
-export const testCi = {
-  name: "test-ci",
-  command: "jest --coverage",
-  ...testTemplate,
-};
+  command: `jest ${params}`,
+});
+export const testDev = { ...testTemplate };
+export const testCi = { ...testTemplate("--coverage") };
 
 export const publish = {
-  name: "publish",
   command: "npm publish",
   styles: ["bgRed", "whiteBright"],
 };
 
 export const publishLocal = {
-  name: "publish-local",
-  relay: [
-    lint,
-    testDev,
-    {
-      name: "patch",
-      command: "npm version patch",
-    },
-    publish,
-  ],
+  relay: [lint, testDev, { command: "npm version patch" }, publish],
 };
 
 export const syncSqript = {

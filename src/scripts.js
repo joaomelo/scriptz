@@ -2,6 +2,7 @@ import { existsSync } from "fs";
 import { resolve } from "path";
 import { pathToFileURL } from "url";
 import { evaluateArgument } from "./arguments.js";
+import { kebabCase } from "lodash-es";
 
 export async function extractUserScriptsFromConfigFile() {
   const candidates = mountCandidatesConfigFileUrls();
@@ -33,6 +34,9 @@ function electConfigFile(candidates) {
 
 async function parseScriptsFromConfigFile(url) {
   const exportedScripts = await import(url);
-  const scripts = Object.values(exportedScripts);
+  const scripts = Object.entries(exportedScripts).map(([key, script]) => ({
+    name: kebabCase(key),
+    ...script,
+  }));
   return scripts;
 }
