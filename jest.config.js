@@ -7,4 +7,5 @@ export default {
   ],
   setupFiles: ["./tests/setup-jest.js"],
   coverageDirectory: "./tests/coverage",
+  collectCoverageFrom: ["**/src/**/*.js"],
 };
