@@ -15,7 +15,7 @@ NPM [scripts](https://docs.npmjs.com/cli/v8/using-npm/scripts) feature is super 
 
 ![an unconformable personal npm scripts example](https://raw.githubusercontent.com/joaomelo/sqript/main/docs/npm-scripts-example.png)
 
-I've also tried [Bash](https://www.gnu.org/software/bash/), [Gulp](https://gulpjs.com/), [Grunt](https://gruntjs.com/) and [ZX](https://github.com/google/zx). They are all great pieces of battle tested software (and possibly a better alternative to you) but, somehow, I never felt at home with the API.
+I've also tried [Bash](https://www.gnu.org/software/bash/), [Gulp](https://gulpjs.com/), [Grunt](https://gruntjs.com/) and [ZX](https://github.com/google/zx). They are all great pieces of battle-tested software (and possibly a better alternative to you) but, somehow, I never felt at home with the API.
 
 I think the point is to have something that offers the power and ergonomics of a modern language without losing the simplicity expected from tools peripheral to the programming challenge itself.
 
@@ -40,30 +40,29 @@ Then create a `sqript.config.js` file in the root project folder and open it so 
 ```js
 // sqript.config.js
 export const lint = {
-  name: "lint",
   command: "eslint . --ext .js",
 };
 ```
 
-There are two ways we can use **Sqript** to run the command we just created. The first is to pass the name as an argument in the command line. Like this:
+There are two ways we can use **Sqript** to run the command we just created. The first is to pass the script name as an argument in the command line. Like this:
 
 ```shell
 npx sqript --name=lint
 ```
 
-The second way is to call **Sqript** without any arguments. It will show a list of available scripts. Just choose the one you want to run.
+The second way is to call **Sqript** without any arguments. It will show the list of available scripts. Choose the one you want to run and voilà.
 
 ```shell
 npx sqript
 ```
 
-Note that **Sqript** will also attempt to find a `sqript.config.mjs` file and we can pass an arbitrary scripts file using the `config` argument, like so:
+Note that **Sqript** will also attempt to find a `sqript.config.mjs` file and we can pass an arbitrary file using the `config` argument, like so:
 
 ```shell
 npx sqript --name=lint --config=my-scripts.js
 ```
 
-Lint commands are essential, but things can be way more fun when we start to compose and style more challenging scripts in the next sections.
+Lint commands are essential, but things will be way more fun when we start to compose and style challenging scripts in the next sections.
 
 # Composing Scripts
 
@@ -75,17 +74,14 @@ Let's explore a scenario where we want to pass some quality checks and if, every
 
 ```js
 export const test = {
-  name: "test",
   command: "jest",
 };
 
 export const compile = {
-  name: "compile",
   relay: [{ command: "rimraf dist/*" }, { command: "tsc" }],
 };
 
 export const publish = {
-  name: "publish",
   command: "some-host-cli publish",
 };
 
@@ -95,9 +91,9 @@ export const deploy = {
 };
 ```
 
-One thing to observe here is the role of the `export` statement. Every script exported in `sqript.config.js` will be available for execution. In the last example, not only does the `deploy` composition take advantage of the `compile` one, but we could execute `compile` independently with `npx sqript --name=compile`.
+One thing to observe here is the role of the `export` statement. Every script exported in `sqript.config.js` will be available for execution. In the last example, not only does `deploy` take advantage of `compile`, but we could execute `compile` independently with `npx sqript --name=compile`.
 
-Coming back to the `relay` subject, relays attempt to run their scripts sequentially but will stop immediately if any of them fail. This is useful if one wants to cancel the workflow when lint or test commands fail, for example.
+Coming back to the `relay` subject, relays attempt to run their scripts sequentially but will stop immediately if any of them fail. This is useful if someone wants to cancel the workflow when lint or test commands fail, for example.
 
 Another sequential type available is the `serial` script.
 
@@ -109,7 +105,6 @@ Serial runs all its scripts one after another; but, contrary to `relay`, will ke
 // ... base scripts definition
 
 export const diagnoses = {
-  name: "diagnoses",
   serial: [lint, unitTests, integrationTests, e2eTests],
 };
 ```
@@ -124,7 +119,6 @@ Rally will start all its children as early as possible and keep running until ev
 
 ```js
 export const servers = {
-  name: "servers",
   rally: [testsWatchMode, localWebServer, cloudEnvEmulator],
 };
 ```
@@ -133,32 +127,55 @@ Compositions with `rally` could be useful to kickstart an ongoing local dev envi
 
 ## Race
 
-Like its `rally` cousin, `race` will start every child script as soon as possible. But when anyone of them completes (no matter if with success or failure), `race` will kill all the others and exit.
+Like its `rally` cousin, `race` will start every child script as soon as possible. But when any of them completes (no matter if with success or failure), `race` will kill all the others and exit.
 
 ```js
 const testCiWorkflow = {
-  name: "test-ci-workflow",
   race: [servers, testCi],
 };
 
 export const deploy = {
-  name: "deploy",
   relay: [testCiWorkflow, publish],
 };
 ```
 
 In the above example, we can see that different script types can be put together to achieve challenging workflows.
 
-The capability of putting together scripts with different execution rules is the bulk of what **Sqript** offers. Even so, there are still some secondary features worth discussing.
+The capability of putting together scripts with different execution rules is the bulk of what **Sqript** offers. Even so, there are still some complementary features worth discussing.
 
 # Styling Prefixes
 
 **Sqript** will print every `command` output in the terminal with prefixes to enable disambiguation. But as scripts become more complex, especially in parallel modes, things can be hard to disambiguate.
 
-Every script can have a `styles` property to set the prefix appearance. The `styles` property is an array of strings supported by the great [Chalk](https://github.com/chalk/chalk#styles) package.
+The prefix is based on the `name` property of the script. Note below.
 
 ```js
-export const testWorkflow = {
+export const publishFromLocalhost = {
+  name: "publish-local",
+  relay: [
+    lint,
+    testDev,
+    {
+      name: "patch",
+      command: "npm version patch",
+    },
+    publish,
+  ],
+};
+```
+
+If `name` is omitted, **Sqript** will use the [kebab-case](https://en.wikipedia.org/wiki/Letter_case#Kebab_case) version of the variable name for exported scripts. All the others will receive a random string as a prefix.
+
+Another way to control prefixes is to pass a `length` argument to **Sqript**. Prefixes will obey the given value by padding or truncating names. Like this:
+
+```shell
+npx sqript --length=5 --name=test-workflow
+```
+
+Finally, every script can have a `styles` property to set the prefix appearance. The `styles` property is an array of strings supported by the great [Chalk](https://github.com/chalk/chalk#styles) package.
+
+```js
+export const baseTestWorkflow = {
   name: "test-workflow",
   styles: ["underline", "blue"],
   race: [
@@ -177,12 +194,6 @@ export const testWorkflow = {
 ```
 
 Please don't judge my aesthetic choices.
-
-We can also pass a `length` argument to **Sqript** so prefixes will obey to the given size by padding or truncating scripts names. Like this:
-
-```shell
-npx sqript --length=5 --name=test-workflow
-```
 
 # Commands Environment Variables
 
