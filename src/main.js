@@ -16,5 +16,5 @@ export async function main() {
 
   const runner = run(chosenScript);
   const code = await runner.code;
-  process.exit(code);
+  process.exitCode = code;
 }

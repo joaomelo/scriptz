@@ -3,12 +3,12 @@ export const lint = {
   styles: ["bgWhite", "yellow"],
 };
 
-const testTemplate = (params) => ({
+const testTemplate = (params = "") => ({
   styles: ["bgGreenBright", "whiteBright"],
   command: `jest ${params}`,
 });
-export const testDev = { ...testTemplate };
-export const testCi = { ...testTemplate("--coverage") };
+export const testDev = testTemplate();
+export const testCi = testTemplate("--coverage");
 
 export const publish = {
   command: "npm publish",
