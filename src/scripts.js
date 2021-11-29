@@ -34,9 +34,14 @@ function electConfigFile(candidates) {
 
 async function parseScriptsFromConfigFile(url) {
   const exportedScripts = await import(url);
-  const scripts = Object.entries(exportedScripts).map(([key, script]) => ({
-    name: kebabCase(key),
-    ...script,
-  }));
-  return scripts;
+
+  // we apply default names by a side effect, so the name
+  // will be reused whenever the script was composed
+  Object.entries(exportedScripts).forEach(([key, script]) => {
+    if (!script.name) {
+      script.name = kebabCase(key);
+    }
+  });
+
+  return Object.values(exportedScripts);
 }
