@@ -3,6 +3,7 @@ import { TYPES, resolveType } from "./types.js";
 import { solveCode } from "./code.js";
 import { parseEnv } from "./env.js";
 import { tag } from "./tag.js";
+import treeKill from "tree-kill";
 
 export function run(script, parents = []) {
   const type = resolveType(script);
@@ -31,7 +32,7 @@ function command(script, parents) {
 
   tag(runningProcess, [...parents, script]);
 
-  const kill = () => runningProcess.kill();
+  const kill = () => treeKill(runningProcess.pid);
   const code = new Promise((resolve) => {
     runningProcess.on("close", (code) => resolve(solveCode(code)));
   });
