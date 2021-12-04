@@ -2,24 +2,19 @@ import { resolve } from "path";
 import { readFileSync } from "fs";
 import { parse } from "dotenv";
 
-export function parseEnv(envConfig = {}) {
-  let env = {};
-  if (typeof envConfig === "string") {
-    const filePath = resolve(process.cwd(), envConfig);
-    const buffer = readFileSync(filePath);
-    const envFromFile = parse(buffer);
-    env = {
-      ...envFromFile,
+export function parseEnv(userConfigs = []) {
+  const envConfigs = Array.isArray(userConfigs) ? userConfigs : [userConfigs];
+
+  const parsedEnv = envConfigs.reduce((acc, config) => {
+    return {
+      ...acc,
+      ...solveConfig(config),
     };
-  } else {
-    env = {
-      ...envConfig,
-    };
-  }
+  }, {});
 
   return {
     ...process.env,
-    ...env,
+    ...parsedEnv,
 
     /* 
       this env var preserves colors for the user's commands 
@@ -28,5 +23,20 @@ export function parseEnv(envConfig = {}) {
       https://stackoverflow.com/a/43375301/7024301
     */
     FORCE_COLOR: "true",
+  };
+}
+
+function solveConfig(config = {}) {
+  if (typeof config === "string") {
+    const filePath = resolve(process.cwd(), config);
+    const buffer = readFileSync(filePath);
+    const envFromFile = parse(buffer);
+    return {
+      ...envFromFile,
+    };
+  }
+
+  return {
+    ...config,
   };
 }

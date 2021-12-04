@@ -221,6 +221,25 @@ export const serverCi = {
 
 The last example creates scripts variations taking advantage of a function and the spread operator. Although naive, it highlights a promising potential available to every **Sqript** config file.
 
+Lastly, you can also mix environment configurations using an array.
+
+```js
+export const localDev = {
+  rally: [
+    firebaseEmulators
+    webpackDevServer,
+  ],
+  env: [
+    '.credentials.env',
+    {
+      APP_ENV_MODE: "DEVELOPMENT",
+      APP_ENV_FIREAUTH_EMULATOR_HOST: "http://localhost:9099",
+      APP_ENV_FIRESTORE_EMULATOR_HOST: "8080",
+    },
+  ],
+};
+```
+
 # Contribution
 
 _How can I help?_

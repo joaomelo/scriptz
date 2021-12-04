@@ -21,4 +21,20 @@ describe("env injection", () => {
     await runner.code;
     expectInfoCalledWith("MY_STRING_ENV");
   });
+
+  test("can resiliently inject from multiple sources using arrays", async () => {
+    const runner = run({
+      name: "command",
+      command: "node tests/fixtures/info-env",
+      env: [
+        null,
+        undefined,
+        { myStringEnv: "myStringEnv" },
+        "tests/fixtures/info-env.env",
+      ],
+    });
+    await runner.code;
+    expectInfoCalledWith("MY_STRING_ENV");
+    expectInfoCalledWith("myStringEnv");
+  });
 });
