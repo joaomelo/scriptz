@@ -86,7 +86,6 @@ export const publish = {
 };
 
 export const deploy = {
-  name: "deploy",
   relay: [test, compile, publish],
 };
 ```
