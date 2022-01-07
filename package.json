@@ -16,16 +16,17 @@
   "homepage": "https://github.com/joaomelo/sqript",
   "license": "GPL-3.0",
   "keywords": [
-    "build",
-    "pipeline",
-    "make",
-    "devops-tools",
     "automation",
-    "task",
-    "task-runner",
+    "build",
+    "cli",
+    "devops-tools",
+    "make",
+    "pipeline",
     "task-manager",
-    "workflow",
-    "workflow-automation"
+    "task-runner",
+    "task",
+    "workflow-automation",
+    "workflow"
   ],
   "dependencies": {
     "chalk": "^4.1.2",
