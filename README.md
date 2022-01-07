@@ -5,7 +5,7 @@
 
 _What problem does it solve?_
 
-**Sqript** is an npm package that helps code and execute scripts with JavaScript. Its goal is to make development workflows descriptive, composable, and maintainable.
+**Sqript** is an npm package that helps author and execute scripts with JavaScript. Its goal is to make development workflows descriptive, composable, and maintainable.
 
 # Motivation
 
@@ -250,9 +250,7 @@ Bug reports and feature requests are welcome in the form of issues. However, I d
 
 _What to expect?_
 
-The project has limited ambitions. The current set of features and their API can be considered stable from now on.
-
-I expect to apply the package to more projects before the first major version promotion. It will build confidence in its reliability and fix the undoubtedly coming bugs.
+The project has limited ambitions. The current set of features and their API can be considered stable; from now on, I expect only to deal with the undoubtedly coming bugs.
 
 If you want to talk, feel free to contact me via [social media](https://joao.melo.plus).
 
