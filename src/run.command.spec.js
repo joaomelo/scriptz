@@ -50,4 +50,16 @@ describe("command scripts", () => {
 
     expect(code).toBe(1);
   });
+
+  test("can pass down anonymous args if instructed", async () => {
+    const runner = run({
+      name: "command",
+      command: ["echo"],
+      args: true,
+    });
+    runner.kill();
+    const code = await runner.code;
+
+    expect(code).toBe(1);
+  });
 });

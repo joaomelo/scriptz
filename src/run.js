@@ -1,4 +1,5 @@
 import { spawn } from "child_process";
+import { complementCommandWithArguments } from "./arguments.js";
 import { TYPES, resolveType } from "./types.js";
 import { solveCode } from "./code.js";
 import { parseEnv } from "./env.js";
@@ -25,7 +26,9 @@ export function run(script, parents = []) {
 }
 
 function command(script, parents) {
-  const runningProcess = spawn(script.command, {
+  const finalCommand = complementCommandWithArguments(script);
+
+  const runningProcess = spawn(finalCommand, {
     shell: true,
     env: parseEnv(script.env),
   });

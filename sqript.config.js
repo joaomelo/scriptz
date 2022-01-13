@@ -6,6 +6,7 @@ export const lint = {
 const testTemplate = (params = "") => ({
   styles: ["bgGreenBright", "whiteBright"],
   command: `jest ${params}`,
+  args: true,
 });
 export const testDev = testTemplate();
 export const testCi = testTemplate("--coverage");

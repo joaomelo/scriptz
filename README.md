@@ -239,6 +239,26 @@ export const localDev = {
 };
 ```
 
+# Passing Arguments Downstream
+
+Finally, you maybe want to pass arbitrary arguments to a command that will vary from execution to execution. We can let that opportunity open by setting the `args` property to `true`. Like this:
+
+```js
+export const devTests = {
+  styles: ["bgGreenBright", "whiteBright"],
+  command: "jest",
+  args: true,
+};
+```
+
+Now, we can execute **Sqript** with the last example passing a test name.
+
+```shell
+npx sqript --name=dev-tests --length=5 my_spec_name
+```
+
+We can pass as many arguments as wanted, but they all need to be anonymous (not preceded by "-" or "--"). The command executes normally if no anonymous argument is provided.
+
 # Contribution
 
 _How can I help?_
