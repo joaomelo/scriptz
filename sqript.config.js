@@ -5,11 +5,11 @@ export const lint = {
 
 const testTemplate = (params = "") => ({
   styles: ["bgGreenBright", "whiteBright"],
-  command: `jest ${params}`,
+  command: `jest${params}`,
   args: true,
 });
 export const testDev = testTemplate();
-export const testCi = testTemplate("--coverage");
+export const testCi = testTemplate(" --coverage");
 
 export const publish = {
   command: "npm publish",

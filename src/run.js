@@ -26,14 +26,17 @@ export function run(script, parents = []) {
 }
 
 function command(script, parents) {
-  const finalCommand = complementCommandWithArguments(script);
+  const finalScript = {
+    ...script,
+    command: complementCommandWithArguments(script),
+  };
 
-  const runningProcess = spawn(finalCommand, {
+  const runningProcess = spawn(finalScript.command, {
     shell: true,
-    env: parseEnv(script.env),
+    env: parseEnv(finalScript.env),
   });
 
-  tag(runningProcess, [...parents, script]);
+  tag(runningProcess, [...parents, finalScript]);
 
   const kill = () => treeKill(runningProcess.pid);
   const code = new Promise((resolve) => {

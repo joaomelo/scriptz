@@ -20,10 +20,10 @@ describe("script tagging", () => {
 
     expect(global.console.info).toHaveBeenCalledTimes(5);
 
-    expectInfoCalledWith("starting", 1);
+    expectInfoCalledWith("starting: node", 1);
     expectInfoCalledWith("v", 2);
     expectInfoCalledWith("exited", 3);
-    expectInfoCalledWith("starting", 4);
+    expectInfoCalledWith("starting: node", 4);
     expectInfoCalledWith("exited", 5);
   });
 

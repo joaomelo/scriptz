@@ -6,12 +6,10 @@ import { solveCode } from "./code.js";
 export function tag(process, hierarchy) {
   const prefix = createPrefix(hierarchy);
 
-  console.log(hierarchy);
-  console.info(`${prefix} starting`);
-
-  if (process.stdout) tagLine(prefix, process.stdout);
-  if (process.stderr) tagLine(prefix, process.stderr);
-  tagClose(prefix, process);
+  signalStart(prefix, hierarchy);
+  if (process.stdout) signalLine(prefix, process.stdout);
+  if (process.stderr) signalLine(prefix, process.stderr);
+  signalCLose(prefix, process);
 }
 
 function createPrefix(hierarchy) {
@@ -27,7 +25,12 @@ function createPrefix(hierarchy) {
   }, "");
 }
 
-function tagLine(prefix, stream) {
+function signalStart(prefix, hierarchy) {
+  const script = hierarchy[hierarchy.length - 1];
+  console.info(`${prefix} starting: ${script.command}`);
+}
+
+function signalLine(prefix, stream) {
   const rl = readline.createInterface({
     input: stream,
     terminal: false,
@@ -35,7 +38,7 @@ function tagLine(prefix, stream) {
   rl.on("line", (line) => console.info(`${prefix} ${line}`));
 }
 
-function tagClose(prefix, process) {
+function signalCLose(prefix, process) {
   process.on("close", (rawCode) => {
     const code = solveCode(rawCode);
     console.info(`${prefix} exited with code ${code}`);
