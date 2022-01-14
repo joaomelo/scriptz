@@ -6,6 +6,7 @@ import { solveCode } from "./code.js";
 export function tag(process, hierarchy) {
   const prefix = createPrefix(hierarchy);
 
+  console.log(hierarchy);
   console.info(`${prefix} starting`);
 
   if (process.stdout) tagLine(prefix, process.stdout);
