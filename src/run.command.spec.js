@@ -55,7 +55,6 @@ describe("command scripts", () => {
   test("can pass anonymous args downstream", async () => {
     const arg = "anonymous";
     process.argv.push(arg);
-    console.log({ sideEffected: process.argv });
 
     const runner = run({
       name: "command",
