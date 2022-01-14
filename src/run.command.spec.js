@@ -1,4 +1,5 @@
 import { run } from "./run.js";
+import { expectInfoCalledWith } from "../tests/expect.js";
 
 describe("command scripts", () => {
   test("successfully run", async () => {
@@ -51,15 +52,17 @@ describe("command scripts", () => {
     expect(code).toBe(1);
   });
 
-  test("can pass down anonymous args if instructed", async () => {
+  test("can pass anonymous args downstream", async () => {
+    const arg = "anonymous";
+    process.argv.push(arg);
+
     const runner = run({
       name: "command",
-      command: ["echo"],
+      command: "node tests/fixtures/info-args",
       args: true,
     });
-    runner.kill();
-    const code = await runner.code;
+    await runner.code;
 
-    expect(code).toBe(1);
+    expectInfoCalledWith(arg);
   });
 });
